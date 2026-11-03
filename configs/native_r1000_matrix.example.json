@@ -1,0 +1,198 @@
+{
+  "_status": "BIND_REQUIRED_NOT_RUN: provide real peer endpoints and explicit start epochs, SOURCE-prepared checkpoints, per-seed registries, cost/feature calibration, and development-selected settings. The eight external methods have no native adapters in this matrix.",
+  "formal": false,
+  "algorithm_config": "configs/native_r1000.json",
+  "primary_detector": "YOLOv8n",
+  "clients": [
+    "0",
+    "1",
+    "2",
+    "3"
+  ],
+  "seeds": [
+    1001,
+    1002,
+    1003,
+    1004,
+    1005
+  ],
+  "output_root": "runs/native_r1000",
+  "datasets": {
+    "ControlledFog": {
+      "registries": {
+        "1001": "data/ControlledFog/registry_1001.json",
+        "1002": "data/ControlledFog/registry_1002.json",
+        "1003": "data/ControlledFog/registry_1003.json",
+        "1004": "data/ControlledFog/registry_1004.json",
+        "1005": "data/ControlledFog/registry_1005.json"
+      },
+      "contact_trace": "configs/contacts.example.json"
+    },
+    "ACDC": {
+      "registries": {
+        "1001": "data/ACDC/registry_1001.json",
+        "1002": "data/ACDC/registry_1002.json",
+        "1003": "data/ACDC/registry_1003.json",
+        "1004": "data/ACDC/registry_1004.json",
+        "1005": "data/ACDC/registry_1005.json"
+      },
+      "contact_trace": "configs/contacts.example.json"
+    }
+  },
+  "detectors": {
+    "YOLOv8n": {
+      "checkpoint": "assets/bases/YOLOv8n_8cls.pt",
+      "config": "configs/detector_YOLOv8n.example.json"
+    },
+    "YOLO11n": {
+      "checkpoint": "assets/bases/YOLO11n_8cls.pt",
+      "config": "configs/detector_YOLO11n.example.json"
+    },
+    "YOLO26n": {
+      "checkpoint": "assets/bases/YOLO26n_8cls.pt",
+      "config": "configs/detector_YOLO26n.example.json"
+    }
+  },
+  "serial_selection": {
+    "ControlledFog/YOLOv8n": {
+      "development_record_sha256": null,
+      "rule": {
+        "order": [
+          "configuration",
+          "collaboration"
+        ],
+        "fraction": 0.5,
+        "attempt_fraction": 0.5
+      }
+    },
+    "ControlledFog/YOLO11n": {
+      "development_record_sha256": null,
+      "rule": {
+        "order": [
+          "configuration",
+          "collaboration"
+        ],
+        "fraction": 0.5,
+        "attempt_fraction": 0.5
+      }
+    },
+    "ControlledFog/YOLO26n": {
+      "development_record_sha256": null,
+      "rule": {
+        "order": [
+          "configuration",
+          "collaboration"
+        ],
+        "fraction": 0.5,
+        "attempt_fraction": 0.5
+      }
+    },
+    "ACDC/YOLOv8n": {
+      "development_record_sha256": null,
+      "rule": {
+        "order": [
+          "configuration",
+          "collaboration"
+        ],
+        "fraction": 0.5,
+        "attempt_fraction": 0.5
+      }
+    },
+    "ACDC/YOLO11n": {
+      "development_record_sha256": null,
+      "rule": {
+        "order": [
+          "configuration",
+          "collaboration"
+        ],
+        "fraction": 0.5,
+        "attempt_fraction": 0.5
+      }
+    },
+    "ACDC/YOLO26n": {
+      "development_record_sha256": null,
+      "rule": {
+        "order": [
+          "configuration",
+          "collaboration"
+        ],
+        "fraction": 0.5,
+        "attempt_fraction": 0.5
+      }
+    }
+  },
+  "cell_overrides": {},
+  "ablation_detectors": [
+    "YOLOv8n",
+    "YOLO11n",
+    "YOLO26n"
+  ],
+  "epoch_start_unix": null,
+  "trajectory_spacing_seconds": null,
+  "physical_nodes": {
+    "0": {
+      "endpoint": {
+        "host": "SET_JETSON_0_ADDRESS",
+        "port": 18760
+      },
+      "config": "configs/native_r1000.json",
+      "overrides": {
+        "deployment": {
+          "default_endpoint": {
+            "host": "127.0.0.1",
+            "port": 18770,
+            "token_env": "SOFTCAS_PEER_TOKEN"
+          }
+        }
+      }
+    },
+    "1": {
+      "endpoint": {
+        "host": "SET_JETSON_1_ADDRESS",
+        "port": 18761
+      },
+      "config": "configs/native_r1000.json",
+      "overrides": {
+        "deployment": {
+          "default_endpoint": {
+            "host": "127.0.0.1",
+            "port": 18770,
+            "token_env": "SOFTCAS_PEER_TOKEN"
+          }
+        }
+      }
+    },
+    "2": {
+      "endpoint": {
+        "host": "SET_JETSON_2_ADDRESS",
+        "port": 18762
+      },
+      "config": "configs/native_r1000.json",
+      "overrides": {
+        "deployment": {
+          "default_endpoint": {
+            "host": "127.0.0.1",
+            "port": 18770,
+            "token_env": "SOFTCAS_PEER_TOKEN"
+          }
+        }
+      }
+    },
+    "3": {
+      "endpoint": {
+        "host": "SET_JETSON_3_ADDRESS",
+        "port": 18763
+      },
+      "config": "configs/native_r1000.json",
+      "overrides": {
+        "deployment": {
+          "default_endpoint": {
+            "host": "127.0.0.1",
+            "port": 18770,
+            "token_env": "SOFTCAS_PEER_TOKEN"
+          }
+        }
+      }
+    }
+  }
+}

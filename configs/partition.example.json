@@ -1,0 +1,10 @@
+{
+  "registry": "data/ACDC/grouped_roles_unassigned.json",
+  "output": "data/ACDC/registry_9001.json",
+  "domains": ["fog", "night", "rain", "snow"],
+  "seed": 9001,
+  "alpha": 1.0,
+  "max_passes": 100,
+  "clients": 4,
+  "equal": false
+}

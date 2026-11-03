@@ -1,0 +1,11 @@
+# Install PyTorch/torchvision from https://download.pytorch.org/whl/cu128 first.
+torch==2.7.1
+torchvision==0.22.1
+ultralytics==8.4.0
+numpy>=1.26,<3
+scipy>=1.11
+Pillow>=10
+psutil>=5.9
+PyYAML>=6
+onnx>=1.16,<2
+onnxscript>=0.1,<1

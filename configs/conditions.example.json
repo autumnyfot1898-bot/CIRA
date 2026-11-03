@@ -1,0 +1,22 @@
+{
+  "_status": "BIND_REQUIRED: metadata materialization only; no training and no raw-image writes. Alpha always executes whole-scene reassignment. Exact achieved supports are reported and unsupported D/V/A cells are rejected.",
+  "condition": {
+    "dataset": "ControlledFog",
+    "detector": "YOLOv8n",
+    "seed": 1001,
+    "alpha": 1,
+    "data_fraction": 0.5,
+    "order": "independent",
+    "contacts": "normal",
+    "donors": "normal"
+  },
+  "source_registry": "BIND_VERIFIED_COMPLETE_REGISTRY.json",
+  "source_contact_trace": "BIND_CONTACT_TRACE.json",
+  "domains": ["Clear", "Fog005", "Fog010", "Fog020"],
+  "clients": ["0", "1", "2", "3"],
+  "max_passes": 50,
+  "formal": true,
+  "output": "runs/conditions/new_condition",
+  "half_payload_event": null,
+  "weak_donor_lock": null
+}

@@ -1,0 +1,6 @@
+{
+  "agent_config": "configs/jetson_orin.json",
+  "deployment_id": "SET_TRAJECTORY_NAMESPACE-0",
+  "images": ["/data/example.png"],
+  "output": "/data/softcas/predictions.json"
+}

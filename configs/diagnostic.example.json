@@ -1,0 +1,16 @@
+{
+  "_status": "Four-fit diagnostic schema; fill development-locked structures, coefficients and donor versions before use.",
+  "formal": false,
+  "config": "configs/windows_5080.json",
+  "checkpoint": "assets/bases/YOLOv8n_8cls.pt",
+  "detector_config": "configs/detector.example.json",
+  "registry": "data/ACDC/registry_1001.json",
+  "client": "0",
+  "stage": 2,
+  "domain": "SET_ACTUAL_SECOND_DOMAIN",
+  "output": "runs/diagnostics/ACDC_1001_client0",
+  "diagnostic": {"development_record_sha256": null, "structures": [], "h": {"lr": 0.001, "residual": 0.001},
+                 "peer_packages": [], "receiving_coefficients": {}, "snapshot_time": null,
+                 "initialization_seed": 1001, "fit_steps": null,
+                 "budget": {"F": 100000000000000, "E": 0, "B": 0, "W": 3600}}
+}

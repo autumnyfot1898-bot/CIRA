@@ -1,0 +1,6 @@
+{
+  "_status": "The appearance map explicitly links original polygon annotations to chosen rendered images and global scene roles.",
+  "format": "cityscapes_polygons",
+  "appearance_scene_map": "data/ControlledFog/verified_appearance_scene_map.json",
+  "output": "data/ControlledFog/unassigned_registry.json"
+}

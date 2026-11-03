@@ -1,0 +1,140 @@
+{
+  "purpose": "SYNTHETIC_BEHAVIOR_ONLY",
+  "confirmed": {},
+  "seed": 1001,
+  "method": "softcas",
+  "ablation": "none",
+  "features": {
+    "fields": [
+      "bias",
+      "type_configuration",
+      "type_cached",
+      "type_acquisition",
+      "type_import",
+      "kind_fresh",
+      "kind_refine",
+      "kind_add",
+      "kind_remove",
+      "kind_replace",
+      "kind_import",
+      "kind_discrete",
+      "parent_utility",
+      "members",
+      "beta_sum",
+      "fit_steps",
+      "fidelity",
+      "package_bytes",
+      "package_missing",
+      "local_ports",
+      "ratio",
+      "remaining_F",
+      "remaining_E",
+      "remaining_B",
+      "remaining_W"
+    ],
+    "scales": {
+      "bias": 1,
+      "type_configuration": 1,
+      "type_cached": 1,
+      "type_acquisition": 1,
+      "type_import": 1,
+      "parent_utility": 1,
+      "members": 1,
+      "beta_sum": 1,
+      "fit_steps": 10,
+      "fidelity": 1,
+      "package_bytes": 10000,
+      "package_missing": 1,
+      "local_ports": 1,
+      "ratio": 1,
+      "remaining_F": 10000000000.0,
+      "remaining_E": 30,
+      "remaining_B": 1000000,
+      "remaining_W": 120,
+      "kind_fresh": 1,
+      "kind_refine": 1,
+      "kind_add": 1,
+      "kind_remove": 1,
+      "kind_replace": 1,
+      "kind_import": 1,
+      "kind_discrete": 1
+    }
+  },
+  "cold_order": [
+    "configuration",
+    "cached",
+    "acquisition",
+    "import"
+  ],
+  "type_order": [
+    "configuration",
+    "cached",
+    "acquisition",
+    "import"
+  ],
+  "ridge_lambda": 1,
+  "kappa": 0.1,
+  "priority_epsilon": 0.001,
+  "archive_capacity": 6,
+  "archive_truncation": "utility_hash",
+  "tournament_tie": "hash",
+  "attempts": 8,
+  "proposals_per_type": 3,
+  "phi_steps": 2,
+  "beta_steps": 2,
+  "beta_lr": 0.01,
+  "residual_epsilon": 1e-08,
+  "cache_bytes": 1000000,
+  "contact_quota": 1000000,
+  "max_external_paths": 6,
+  "audit_epsilon": 0.0,
+  "qualification_repeats": 5,
+  "flop_meter": "torch_profiler_partial",
+  "fixed": {
+    "mask": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "ratio": 0.125,
+    "lr": 0.001,
+    "residual": 0.001
+  },
+  "budgets": {
+    "search": {
+      "F": 10000000000.0,
+      "E": 30,
+      "B": 1000000,
+      "W": 120
+    },
+    "release": {
+      "F": 10000000000.0,
+      "E": 0,
+      "B": 1000000,
+      "W": 30
+    }
+  },
+  "estimates": {
+    "evaluation_F": 1000000,
+    "step_F": 2000000,
+    "evaluation_W": 0.1,
+    "step_W": 0.1,
+    "control_bytes": 64
+  },
+  "device_limits": {
+    "deployed_tensor_bytes": 10000000,
+    "peak_process_ram_bytes": 10000000000,
+    "p95_ms": 1000
+  },
+  "serial": {
+    "order": [
+      "configuration",
+      "collaboration"
+    ],
+    "fraction": 0.5,
+    "attempt_fraction": 0.5
+  }
+}

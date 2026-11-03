@@ -1,0 +1,7 @@
+# Versions verified locally; torch is the CPU wheel from download.pytorch.org.
+torch==2.5.1+cpu
+torchvision==0.20.1+cpu
+ultralytics==8.4.0
+numpy==2.3.5
+scipy==1.18.1
+# Remaining installed versions are captured in artifacts/environment.json.

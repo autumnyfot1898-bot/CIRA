@@ -1,0 +1,57 @@
+{
+  "_status": "REFERENCE_ONLY: confirmed user hardware family; software build, bases, registries and measured profiles remain unbound.",
+  "device_id": "jetson-orin-nano-8gb",
+  "jetpack_expected": null,
+  "sku_expected": "Jetson Orin Nano 8GB",
+  "runtime": {
+    "device": "cuda:0",
+    "precision": "float32",
+    "family": "jetson_orin",
+    "deterministic": true,
+    "allow_tf32": false,
+    "channels_last": false,
+    "seed": 1001
+  },
+  "executor": "torch",
+  "trt_fp16": false,
+  "trt_workspace_bytes": 1073741824,
+  "engine_store": "/data/softcas/engines",
+  "job_store": "/data/softcas/jobs",
+  "publication_store": "/data/softcas/published",
+  "bases": {},
+  "registries": {},
+  "cache_bytes": 134217728,
+  "worker_memory_bytes": null,
+  "operational_memory_fraction": 0.75,
+  "minimum_free_bytes": 0,
+  "cuda_memory_bytes": null,
+  "measurement_repeats": 200,
+  "measurement_warmup": 50,
+  "worker_budget": {
+    "F": 100000000000000,
+    "E": 0,
+    "B": 1073741824,
+    "W": 1800
+  },
+  "serving_budget": {
+    "F": 100000000000000,
+    "E": 0,
+    "B": 107374182400,
+    "W": 86400
+  },
+  "meter": {
+    "strict": false,
+    "enforce_F": true,
+    "overrides": {}
+  },
+  "source_payload_quota": 1073741824,
+  "maximum_bundle_bytes": 268435456,
+  "maximum_bundle_expanded_bytes": 536870912,
+  "maximum_log_bytes": 16777216,
+  "maximum_job_store_bytes": 10737418240,
+  "maximum_engine_store_bytes": 4294967296,
+  "job_timeout_seconds": 1800,
+  "bind": "0.0.0.0",
+  "port": 18770,
+  "token_env": "SOFTCAS_PEER_TOKEN"
+}

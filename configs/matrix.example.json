@@ -1,0 +1,33 @@
+{
+  "_status": "Registered core layout, not an execution request. Serial examples and algorithm settings must be development-locked before formal=true.",
+  "formal": false,
+  "algorithm_config": "configs/windows_5080.json",
+  "primary_detector": "YOLOv8n",
+  "clients": ["0", "1", "2", "3"],
+  "seeds": [1001, 1002, 1003, 1004, 1005],
+  "output_root": "runs/formal_candidates",
+  "datasets": {
+    "ControlledFog": {
+      "registries": {"1001": "data/ControlledFog/registry_1001.json", "1002": "data/ControlledFog/registry_1002.json", "1003": "data/ControlledFog/registry_1003.json", "1004": "data/ControlledFog/registry_1004.json", "1005": "data/ControlledFog/registry_1005.json"},
+      "contact_trace": "configs/contacts.example.json"
+    },
+    "ACDC": {
+      "registries": {"1001": "data/ACDC/registry_1001.json", "1002": "data/ACDC/registry_1002.json", "1003": "data/ACDC/registry_1003.json", "1004": "data/ACDC/registry_1004.json", "1005": "data/ACDC/registry_1005.json"},
+      "contact_trace": "configs/contacts.example.json"
+    }
+  },
+  "detectors": {
+    "YOLOv8n": {"checkpoint": "assets/bases/YOLOv8n_8cls.pt", "config": "configs/detector.example.json"},
+    "YOLO11n": {"checkpoint": "assets/bases/YOLO11n_8cls.pt", "config": "configs/detector.example.json"},
+    "YOLO26n": {"checkpoint": "assets/bases/YOLO26n_8cls.pt", "config": "configs/detector.example.json"}
+  },
+  "serial_selection": {
+    "ControlledFog/YOLOv8n": {"development_record_sha256": null, "rule": {"order": ["configuration", "collaboration"], "fraction": 0.5, "attempt_fraction": 0.5}},
+    "ControlledFog/YOLO11n": {"development_record_sha256": null, "rule": {"order": ["configuration", "collaboration"], "fraction": 0.5, "attempt_fraction": 0.5}},
+    "ControlledFog/YOLO26n": {"development_record_sha256": null, "rule": {"order": ["configuration", "collaboration"], "fraction": 0.5, "attempt_fraction": 0.5}},
+    "ACDC/YOLOv8n": {"development_record_sha256": null, "rule": {"order": ["configuration", "collaboration"], "fraction": 0.5, "attempt_fraction": 0.5}},
+    "ACDC/YOLO11n": {"development_record_sha256": null, "rule": {"order": ["configuration", "collaboration"], "fraction": 0.5, "attempt_fraction": 0.5}},
+    "ACDC/YOLO26n": {"development_record_sha256": null, "rule": {"order": ["configuration", "collaboration"], "fraction": 0.5, "attempt_fraction": 0.5}}
+  },
+  "cell_overrides": {}
+}

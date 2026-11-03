@@ -1,0 +1,8 @@
+{
+  "host": "SET_ORIN_ADDRESS",
+  "port": 18770,
+  "token_env": "SOFTCAS_PEER_TOKEN",
+  "timeout_seconds": 15,
+  "deployment_id": "SET_TRAJECTORY_NAMESPACE-0",
+  "budget": {"F": 0, "E": 0, "B": 1048576, "W": 30}
+}

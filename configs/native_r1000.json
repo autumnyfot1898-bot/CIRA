@@ -1,0 +1,78 @@
+{
+  "extends": "jetson_updates.json",
+  "purpose": "DEVELOPMENT",
+  "_status": "NATIVE_R1000_REFERENCE_NOT_EXECUTED: F/W and feature scales need development calibration; zero unbound F/W disables execution. Native online fitting is on four Orin Nano 8GB peers; RTX 5080 is SOURCE/offline only.",
+  "proposal_protocol": "native_r1000",
+  "fitting": {
+    "unit": "epochs",
+    "stage_epochs": 500,
+    "local_epochs": 32,
+    "receiving_epochs": 16
+  },
+  "round_budget": {
+    "per_client": 1000,
+    "stages": 4,
+    "epochs_per_round": 2
+  },
+  "fit_batch_size": 8,
+  "evaluation_batch_size": 1,
+  "optimizer": {
+    "name": "AdamW",
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0
+  },
+  "attempts": 64,
+  "archive_capacity": 8,
+  "proposals_per_type": 3,
+  "max_external_paths": 12,
+  "ridge_lambda": 1,
+  "kappa": 0.01,
+  "beta_lr": 0.01,
+  "qualification_repeats": 200,
+  "runtime": {
+    "family": "jetson_orin",
+    "device": "cuda:0",
+    "precision": "float32"
+  },
+  "budgets": {
+    "search": {
+      "F": 0,
+      "E": 65,
+      "B": 33554432,
+      "W": 0
+    },
+    "release": {
+      "F": 0,
+      "E": 0,
+      "B": 0,
+      "W": 0
+    }
+  },
+  "device_limits": {
+    "deployed_tensor_bytes": 134217728,
+    "deployed_bytes": 134217728,
+    "peak_process_ram_bytes": 2147483648,
+    "cuda_peak_allocated_bytes": 2147483648,
+    "p95_ms": 100
+  },
+  "working_memory": {
+    "process_bytes": 2147483648,
+    "cuda_bytes": 2147483648,
+    "minimum_free_bytes": 0
+  },
+  "retained_checkpoints": 8,
+  "protocol_pending": [
+    "calibrated F/W allowances and cost_profile",
+    "development-frozen feature scales",
+    "prepared eight-class base hashes",
+    "scene/role support",
+    "four peer addresses and shared epoch",
+    "target runtime binding"
+  ],
+  "confirmed": {},
+  "report_measurement_sessions": 3
+}

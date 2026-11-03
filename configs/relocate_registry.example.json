@@ -1,0 +1,5 @@
+{
+  "registry": "data/ACDC/registry_1001.json",
+  "output": "data/ACDC/registry_1001_orin.json",
+  "path_map": {"D:/datasets/ACDC": "/data/datasets/ACDC"}
+}

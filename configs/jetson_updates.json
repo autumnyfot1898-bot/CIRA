@@ -1,0 +1,8 @@
+{
+  "extends": "windows_5080.json",
+  "_status": "Optional true on-device update profile, not a claim that RTX runs were measured on Orin.",
+  "runtime": {"device": "cuda:0", "precision": "float32", "family": "jetson_orin", "deterministic": true, "allow_tf32": false, "channels_last": false, "seed": 1001},
+  "transport": {"bind": "0.0.0.0", "connect_host": "127.0.0.1"},
+  "deployment": {"default_endpoint": {"host": "127.0.0.1", "port": 18770, "token_env": "SOFTCAS_PEER_TOKEN"}},
+  "cost_profile": null
+}

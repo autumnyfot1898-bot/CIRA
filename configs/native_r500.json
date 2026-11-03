@@ -1,0 +1,12 @@
+{
+  "extends": "native_r1000.json",
+  "_status": "UNEXECUTED R500: same native contract, independent full four-stage allowance; calibration remains required.",
+  "fitting": {
+    "stage_epochs": 250
+  },
+  "round_budget": {
+    "per_client": 500,
+    "stages": 4,
+    "epochs_per_round": 2
+  }
+}

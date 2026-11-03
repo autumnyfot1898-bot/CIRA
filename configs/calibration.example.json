@@ -1,0 +1,14 @@
+{
+  "config": "configs/windows_5080.json",
+  "checkpoint": "assets/bases/YOLOv8n_8cls.pt",
+  "detector_config": "configs/detector.example.json",
+  "registry": "data/ACDC/registry_9001.json",
+  "client": "0",
+  "stage": 1,
+  "seed": 9001,
+  "states": [],
+  "packages": [],
+  "composition_sets": [],
+  "include_search_grid": true,
+  "output": "profiles/5080_ACDC_YOLOv8n_development.json"
+}

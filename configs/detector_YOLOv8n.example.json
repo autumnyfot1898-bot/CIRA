@@ -1,0 +1,24 @@
+{
+  "_status": "R1000 manuscript output-side ports. Verify actual shape and frozen eight-class checkpoint; no trained checkpoint is supplied.",
+  "ports": [
+    4,
+    6,
+    9,
+    15,
+    18,
+    21
+  ],
+  "labels": [
+    "person",
+    "rider",
+    "car",
+    "truck",
+    "bus",
+    "train",
+    "motorcycle",
+    "bicycle"
+  ],
+  "image_size": 640,
+  "preprocessing": "rgb_letterbox114_bilinear_float32_div255",
+  "cached_packages": []
+}

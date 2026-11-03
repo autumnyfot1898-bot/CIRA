@@ -1,0 +1,18 @@
+{
+  "name": "ACDC_YOLOv8n_SoftCAS_development_9001",
+  "dataset": "ACDC",
+  "detector": "YOLOv8n",
+  "method": "softcas",
+  "ablation": "none",
+  "seed": 9001,
+  "formal": false,
+  "config": "configs/windows_5080.json",
+  "checkpoint": "assets/bases/YOLOv8n_8cls.pt",
+  "detector_config": "configs/detector.example.json",
+  "registry": "data/ACDC/registry_9001.json",
+  "registry_id": "ACDC_9001",
+  "clients": ["0", "1", "2", "3"],
+  "contact_trace": "configs/contacts.example.json",
+  "output": "runs/ACDC_YOLOv8n_SoftCAS_development_9001",
+  "overrides": {}
+}

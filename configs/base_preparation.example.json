@@ -1,0 +1,15 @@
+{
+  "_status": "Source/development only. Epochs and training settings require author configuration; no training was run.",
+  "source_registry": "data/source/source_development_8cls.json",
+  "architecture": "yolov8n.yaml",
+  "initial_weights": "assets/pretrained/yolov8n.pt",
+  "output_root": "runs/base_preparation",
+  "name": "YOLOv8n_8cls_source",
+  "epochs": null,
+  "image_size": 640,
+  "batch_size": 1,
+  "workers": 0,
+  "seed": 9001,
+  "runtime": {"device": "cuda:0", "precision": "float32", "family": "rtx5080", "deterministic": true, "allow_tf32": false, "channels_last": false, "seed": 9001},
+  "trainer": {}
+}

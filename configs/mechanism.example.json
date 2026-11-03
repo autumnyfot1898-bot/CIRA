@@ -1,0 +1,26 @@
+{
+  "_status": "UNRUN native snapshot diagnostic. Replace every path and lock the actual checkpoint, donor versions and snapshot time. Do not relabel the old momentum diagnostic as this experiment.",
+  "kind": "receiving",
+  "config": "configs/native_r1000.json",
+  "formal": false,
+  "detector_config": "configs/detector_YOLOv8n.example.json",
+  "checkpoint": "BIND/eight_class_frozen_base.pt",
+  "registry": "BIND/independent_scene_registry.json",
+  "state": "BIND/current_stage_entry_checkpoint.json",
+  "packages": ["BIND/exact_peer_version.json"],
+  "client": "0",
+  "stage": 4,
+  "domain": "Fog",
+  "output": "BIND/new_receiving_diagnostic_output",
+  "diagnostic": {
+    "snapshot_time": null,
+    "parent_sha256": "BIND/exact_parent_hash",
+    "fit_epochs": 16,
+    "initialization_seed": 1001,
+    "max_external_paths": 12,
+    "max_onehot_candidates": 729,
+    "fit_fields": "phi_beta"
+  },
+  "_continuation": "Change kind to continuation and use DEV-locked fit_epochs (e.g. the registered 32). Branches complete_state/reset_receiving/cold_local share z,h,C; reset_receiving resets beta, cold_local resets phi and beta. Every optimizer is new. Same epochs do not imply identical measured cost.",
+  "_matched_work": "For kind=matched_work supply records, policies, pair_fields, tolerance and a new output. Optional expected_pairs locks planned pair identities and retains even completely missing pairs. Flat records require each pair identity, policy, status=completed, work_unit, target_work, actual_work, value. Missing/failed/under-target/over-ceiling rows remain rejected and are never zero-filled."
+}

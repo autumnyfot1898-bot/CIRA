@@ -1,0 +1,9 @@
+{
+  "_status": "Schema example; provide verified scene/role correspondence, not inferred filenames.",
+  "format": "coco",
+  "annotation_files": {"fog": "data/raw/annotations/fog.json", "night": "data/raw/annotations/night.json"},
+  "image_roots": {"fog": "data/raw/images/fog", "night": "data/raw/images/night"},
+  "scene_map": "data/verified_scene_roles.json",
+  "aliases": {},
+  "output": "data/converted/registry.json"
+}

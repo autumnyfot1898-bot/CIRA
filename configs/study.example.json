@@ -1,0 +1,32 @@
+{
+  "_status": "PLAN_ONLY_NOT_RUN: Q0 and Serial 50/50 are unlocked examples. Bind actual DEV locks before formal registration/execution. This registry does not implement external adapters or materialize scene/contact/donor conditions.",
+  "datasets": [
+    "ControlledFog",
+    "ACDC"
+  ],
+  "detectors": [
+    "YOLOv8n",
+    "YOLO11n",
+    "YOLO26n"
+  ],
+  "seeds": [
+    1001,
+    1002,
+    1003,
+    1004,
+    1005
+  ],
+  "development_selection": {
+    "controller_q": "Q0",
+    "locked": false,
+    "sha256": null,
+    "serial_rules": {
+      "ControlledFog/YOLOv8n": "cfg50_collab50",
+      "ControlledFog/YOLO11n": "cfg50_collab50",
+      "ControlledFog/YOLO26n": "cfg50_collab50",
+      "ACDC/YOLOv8n": "cfg50_collab50",
+      "ACDC/YOLO11n": "cfg50_collab50",
+      "ACDC/YOLO26n": "cfg50_collab50"
+    }
+  }
+}

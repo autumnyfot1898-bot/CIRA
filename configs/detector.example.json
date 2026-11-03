@@ -1,0 +1,8 @@
+{
+  "_status": "SCHEMA_ONLY: ports are unconfirmed; prepare exact eight-class frozen checkpoint before use",
+  "ports": [2, 4, 6, 8, 15, 18],
+  "labels": ["person", "rider", "car", "truck", "bus", "train", "motorcycle", "bicycle"],
+  "image_size": 640,
+  "preprocessing": "rgb_letterbox114_bilinear_float32_div255",
+  "cached_packages": []
+}
