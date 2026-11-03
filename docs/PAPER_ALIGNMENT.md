@@ -1,6 +1,15 @@
-## Native baseline addition — 2026-11-03
+## Eight detector implementations — 2026-11-03
 
-The source now contains independently implemented DPFL/DSpodFL round cores and selected DA-DPFL/DCFCL kernels. Actual native loss, update, decoding and checkpoint roundtrip probes cover three YOLO architectures. These probes do not qualify a complete continual-study baseline. The exact eight-method implementation gaps are listed in [DETECTOR_BASELINES.md](DETECTOR_BASELINES.md). The final code regression contains 214 tests. Personal configuration remains blank, and no source-trained base, native DEV result or Orin calibration is fabricated. Earlier paragraphs below describe the preceding execution release. The paper has changed since that release: PAPER_SOURCE_SHA256.json identifies the prior reference, while PAPER_OBSERVED_SHA256.json records the present hashes. Full alignment with those later manuscript changes has not been re-audited by this detector-code update.
+Eight independently implemented detector adaptations are now available in
+softcas/baselines, with a multistage verification runner, preparation interface,
+method configurations and restoration tests. The current release passes 239
+software tests and bounded checks for eight methods on three YOLO architectures.
+See DETECTOR_BASELINES.md for mechanisms, source choices and actual probe scope.
+This code update does not change the manuscript. It does not establish formal
+performance reproduction or alignment of later manuscript revisions. The old
+PAPER_SOURCE_SHA256.json remains the earlier reference; PAPER_OBSERVED_SHA256.json
+records the current paper hashes without promoting them to an alignment audit.
+Personal settings remain blank. Formal qualification is unchanged.
 
 # Paper-to-code alignment — execution update 2026-11-03
 

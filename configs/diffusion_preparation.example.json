@@ -1,0 +1,12 @@
+{
+  "schema": "cira.diffusion_preparation_spec.v1",
+  "triples": {"path": "", "sha256": ""},
+  "device": "",
+  "output": "",
+  "score_config": {"dimensions": 7, "categories": 2, "hidden": 64, "layers": 2, "heads": 4},
+  "predictor_config": {"categories": 2, "dataset_features": 512, "hidden": 64},
+  "diffusion_config": {"sigma_min": 0.01, "sigma_max": 10.0, "steps": 100, "guidance": 1.0, "predictor_std": 0.1, "target_performance": 1.0, "seed": 9001},
+  "iterations_per_phase": null,
+  "learning_rate": 0.00002,
+  "_note": "Illustrative detector-space preparation settings, not a native DEV lock. The actual SOURCE/DEV triples, device, paths and iteration count must be supplied. No author pretrained model or measured result is bundled."
+}

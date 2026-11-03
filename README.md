@@ -1,8 +1,24 @@
 # CIRA native detector implementation — 2026-11-03
 
-The current source passed **214 CPU software tests**. Independent DPFL and DSpodFL round cores now operate on full native detectors. Bounded RTX 5080 checks cover YOLOv8n, YOLO11n and YOLO26n, four replicas per method, native loss/update/decoding, and checkpoint reload. These checks use random eight-class initializations and are not SOURCE training, native DEV results, formal AP or Orin measurements.
+The current source passed **239 CPU software tests**. All eight external methods
+have independent detector implementations: DPFL, DSpodFL, DA-DPFL, DCFCL,
+pFedDIL, dFLMoE, PerFedSDE-NAS and DeModCL. Bounded RTX 5080 checks cover each
+on YOLOv8n, YOLO11n and YOLO26n: four replicas and two iterations per pair,
+native loss/update/decoding, and prediction-preserving checkpoint reload.
 
-DA-DPFL and DCFCL have selected tested kernels; the other method ports and full external-study qualification are still incomplete. The exact eight-method status and primary sources are in [detector baseline status](docs/DETECTOR_BASELINES.md). The implemented external executor is not a replacement for these algorithms.
+Code includes persistent graphs, sparse scheduling/regrowth, coalitions,
+historical banks, exchanged experts, prepared diffusion/search and module sharing.
+See [mechanisms, detector choices and commands](docs/DETECTOR_BASELINES.md).
+Per-method templates are in `configs/detector_baselines/`. After binding real
+inputs, check with `python -m softcas.baselines.runner --spec configs/DPFL.private.json --check`.
+The multistage runner is a single-host adaptation verifier; the formal executor
+retains its separate qualification and physical-budget checks.
+
+Native probes use random eight-class models, 128 input and small actual-image D/V
+batches. Auxiliary labels, diffusion preparation and DeModCL costs include explicit
+software fixtures. These establish executable paths, not comparative AP, SOURCE
+training, native DEV, four-device runs or Orin measurements. Detector changes are
+documented rather than presented as author-native implementations.
 
 Personal configuration is blank in [local settings template](configs/local.private.example.json). Copy it to an ignored `local.private.json`; fill device addresses, login information and real asset paths locally. Remote address placeholders in release templates are empty strings. No credentials or local user paths are supplied.
 
@@ -67,7 +83,7 @@ python -m softcas.production run-plan --spec plan.json --node-id 3
 
 物理计划不带node-id会拒绝执行，不能在一台机器上顺序执行四个节点后称为四设备实验。每个完整seed须合并四个节点的 `trajectory.json`，`trajectory_groups`保存合并清单。报告中客户端不是独立seed。
 
-矩阵目前实现6个内部方法和6项机制干预，三种检测器均安排消融；论文中8个外部文献方法的原生适配尚未实现，不能将数值代理登记算作官方基线运行。
+矩阵目前实现6个内部方法和6项机制干预，三种检测器均安排消融；另有8个独立外部算法检测实现和多阶段验证入口，见上文；软件检查与正式四设备研究的资格绑定分别记录，数值代理不能算作作者算法的正式检测结果。
 
 `study-plan` 另行登记整个 N01—N12（含300/500/1000轮）矩阵：3420条去重训练配方、5130个分析视图；RGB端点评价不新增训练。它登记条件、复用与缺项，不是 `run-plan` 的可执行任务。`study.example.json` 中 Q0/Serial 50:50 只是未锁定的示例，所有配方保持 `planned_not_run/runnable=false`。
 

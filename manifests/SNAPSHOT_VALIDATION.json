@@ -1,12 +1,23 @@
 {
   "snapshot_date": "2026-11-03",
   "publication_tests": {
-    "count": 214,
+    "count": 239,
     "result": "OK",
-    "seconds": 13.189
+    "seconds": 13.521
   },
-  "native_detector_probe_combinations": 6,
-  "native_probe_client_updates": 24,
+  "implemented_detector_adaptations": [
+    "DA-DPFL",
+    "DCFCL",
+    "DPFL",
+    "DSpodFL",
+    "DeModCL",
+    "PerFedSDE-NAS",
+    "dFLMoE",
+    "pFedDIL"
+  ],
+  "native_detector_probe_combinations": 24,
+  "native_probe_model_replicas": 96,
+  "native_probe_client_iterations": 192,
   "native_probe_initialization": "random eight-class NOT_SOURCE",
   "native_probe_is_formal_experiment": false,
   "native_source_pretraining_performed": false,
@@ -17,8 +28,7 @@
   "qualified_native_external_detector_ports": [],
   "personal_configuration_fields_blank": true,
   "private_data_included": false,
-  "paper_source_hashes_unchanged": false,
   "later_paper_changes_alignment_reaudited": false,
-  "current_scope": "source-code delivery; personal/device/data bindings intentionally blank",
+  "current_scope": "independent detector adaptation code and bounded verification; personal/device/data bindings blank",
   "baseline_status_document": "docs/DETECTOR_BASELINES.md"
 }

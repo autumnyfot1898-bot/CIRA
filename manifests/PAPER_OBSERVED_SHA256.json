@@ -1,6 +1,6 @@
 {
   "snapshot_date": "2026-11-03",
-  "scope": "observed current paper; later changes not fully re-audited",
+  "scope": "observed current manuscript; no new manuscript alignment audit",
   "changed_since_prior_reference": [
     "01_introduction.tex",
     "04_softcas_method.tex",

@@ -1,0 +1,49 @@
+{
+  "schema": "cira.detector_port_run.v1",
+  "scope": "NATIVE_ADAPTATION_VERIFICATION",
+  "formal": false,
+  "method": "DCFCL",
+  "detector": "YOLOv8n",
+  "dataset": "ACDC",
+  "seed": 9001,
+  "device": "",
+  "image_size": 640,
+  "checkpoint": {
+    "path": "",
+    "sha256": ""
+  },
+  "registry": {
+    "path": "",
+    "sha256": ""
+  },
+  "output": "",
+  "clients": [
+    "0",
+    "1",
+    "2",
+    "3"
+  ],
+  "stages": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "communication_iterations_per_stage": null,
+  "fit_batch_size": 8,
+  "evaluation_batch_size": 1,
+  "options": {
+    "learning_rate": 0.0001,
+    "local_steps": 1,
+    "distillation_weight": 0.2,
+    "temperature": 2.0,
+    "model_similarity_weight": 0.8
+  },
+  "assets": {},
+  "availability_by_stage": {},
+  "meter": {
+    "strict": false,
+    "overrides": {}
+  },
+  "_note": "Independent detector reimplementation example, not native DEV-selected settings. local_steps/moe_steps/pretrain_steps are minibatch updates, not epochs or paper fitting rounds. Hardware estimates, personal paths and iteration count intentionally unbound. The verification runner is a single-host logical federation."
+}
