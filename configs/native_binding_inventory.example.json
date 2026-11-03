@@ -111,25 +111,25 @@
   "physical_nodes": {
     "0": {
       "endpoint": {
-        "host": "BIND_ORIN_0_ADDRESS",
+        "host": "",
         "port": 18000
       }
     },
     "1": {
       "endpoint": {
-        "host": "BIND_ORIN_1_ADDRESS",
+        "host": "",
         "port": 18001
       }
     },
     "2": {
       "endpoint": {
-        "host": "BIND_ORIN_2_ADDRESS",
+        "host": "",
         "port": 18002
       }
     },
     "3": {
       "endpoint": {
-        "host": "BIND_ORIN_3_ADDRESS",
+        "host": "",
         "port": 18003
       }
     }

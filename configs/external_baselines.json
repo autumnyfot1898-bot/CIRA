@@ -10,8 +10,14 @@
       "upstream_repository": "https://github.com/salmakh1/DPFL",
       "upstream_commit_checked": "000a96827744010cb440b8f990c48841a25d0014",
       "upstream_license_declared": null,
-      "detector_port_status": "not_qualified",
-      "source_note": "Author source repository verified; detector adaptation still requires implementation and qualification."
+      "detector_port_status": "native_round_probe_verified_not_qualified",
+      "source_note": "Independent round implementation checked against selected author functions and native detector loss/update/decode. Full study qualification not completed; see docs/DETECTOR_BASELINES.md.",
+      "implementation": "softcas.detector_baselines",
+      "verified_native_probe_detectors": [
+        "YOLOv8n",
+        "YOLO11n",
+        "YOLO26n"
+      ]
     },
     "pFedDIL": {
       "paper_url": "https://doi.org/10.1007/978-3-031-72952-2_8",
@@ -28,8 +34,9 @@
       "upstream_repository": "https://github.com/EricLoong/da-dpfl",
       "upstream_commit_checked": "a7f93b8b9eb1adc75aa43328f39a9a83e3a854f5",
       "upstream_license_declared": "MIT",
-      "detector_port_status": "not_qualified",
-      "source_note": "Author source repository verified; detector adaptation still requires implementation and qualification."
+      "detector_port_status": "selected_kernels_only_not_full_port",
+      "source_note": "Selected mathematical kernels are implemented/tested; no full detector-study runner or qualification. See docs/DETECTOR_BASELINES.md.",
+      "implementation": "softcas.baseline_algorithms"
     },
     "DeModCL": {
       "paper_url": "https://ieeexplore.ieee.org/abstract/document/11664356/",
@@ -46,8 +53,9 @@
       "upstream_repository": "https://github.com/ydn3229/DCFCL",
       "upstream_commit_checked": "23e94ea285f403edd68e493796959fdc16058a95",
       "upstream_license_declared": "MIT",
-      "detector_port_status": "not_qualified",
-      "source_note": "Author source repository verified; detector adaptation still requires implementation and qualification."
+      "detector_port_status": "selected_kernels_only_not_full_port",
+      "source_note": "Selected mathematical kernels are implemented/tested; no full detector-study runner or qualification. See docs/DETECTOR_BASELINES.md.",
+      "implementation": "softcas.baseline_algorithms"
     },
     "dFLMoE": {
       "paper_url": "https://openaccess.thecvf.com/content/CVPR2025/html/Xie_dFLMoE_Decentralized_Federated_Learning_via_Mixture_of_Experts_for_Medical_CVPR_2025_paper.html",
@@ -73,8 +81,14 @@
       "upstream_repository": "https://github.com/ShahryarBQ/DSpodFL",
       "upstream_commit_checked": "1f1511b597ac878f9d7d98367b0aaae2a5a0be24",
       "upstream_license_declared": null,
-      "detector_port_status": "not_qualified",
-      "source_note": "Author source repository verified; detector adaptation still requires implementation and qualification."
+      "detector_port_status": "native_round_probe_verified_not_qualified",
+      "source_note": "Independent round implementation checked against selected author functions and native detector loss/update/decode. Full study qualification not completed; see docs/DETECTOR_BASELINES.md.",
+      "implementation": "softcas.detector_baselines",
+      "verified_native_probe_detectors": [
+        "YOLOv8n",
+        "YOLO11n",
+        "YOLO26n"
+      ]
     }
   }
 }

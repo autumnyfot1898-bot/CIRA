@@ -1,0 +1,42 @@
+{
+  "snapshot_date": "2026-11-03",
+  "scope": "observed current paper; later changes not fully re-audited",
+  "changed_since_prior_reference": [
+    "01_introduction.tex",
+    "04_softcas_method.tex",
+    "06_experiments.tex",
+    "07_conclusion.tex",
+    "18_core_result_tables.tex",
+    "20_supplement_guide.tex",
+    "main.tex",
+    "supp_sections/S03_comparisons_statistics.tex",
+    "supp_sections/S04_extended_results.tex",
+    "supp_sections/S07_closed_loop_diagnostics.tex",
+    "supplementary.tex"
+  ],
+  "files": {
+    "01_introduction.tex": "4c5a49b2b0fbc25e806986a065d10477852fc8e15010de9175d0fc617ca709cb",
+    "02_related_work.tex": "8d981742233a845880418e8ccea1063eb7e221b2269bb7c0da1f9deaaf0b1f1b",
+    "03_system_model.tex": "1117ae07dd96845da1ac3be38362f8b3b2abb895fd154d6e2d253b622033ff77",
+    "04_softcas_method.tex": "a49545275a6322a90a6fde84ad88d864d760242d3a8428c56b7e727a3eb999a7",
+    "05_resource_analysis.tex": "8b08a08c7c38294f5fe893bbeda79c4585687e1d983951e9e645122d83b764c8",
+    "06_experiments.tex": "af54d570b8575137bd074706f1d5cbebf489e13700be47777a6b6f8c969765d5",
+    "07_conclusion.tex": "33a6f486446903ab9f445463d96f40167431b8c7b6546b57c91efe250546119a",
+    "11_algorithm_details.tex": "f9c086ffe90339367ebca163bd3fbb10eed75d688392ec39ffa43e960976a77b",
+    "18_core_result_tables.tex": "647f1f6ce381c9fba42fc89786bd57f858ec91245af623e335210716588c0013",
+    "20_supplement_guide.tex": "47b6b0f1aea4c666a8800c6d7f1f17ad3dcb64da0c5695e5356b017606f980e8",
+    "main.tex": "1e72fc4d16c2deca3b016e89ccc3330b753b350628a34f2827d4de266afe6946",
+    "preamble_shared.tex": "5b3a897137dcae4b79d15e15277e8ffe2ea5cce41261c93ad5d923b633a7fd86",
+    "references.bib": "d250a6f0b409baca6184390287434d08333e3877038bf71f9006779679e8d1b1",
+    "supp_sections/S01_data_protocol.tex": "aafab75754ddeb671985ab1ec03a01f24566a84af5d07aeb8cfcb44ac7dc6d26",
+    "supp_sections/S02_implementation_math.tex": "c95357f1d71ad9be09dfecc4b2c87e091b73f2081f42aa3e798b89223ef2b500",
+    "supp_sections/S02_proposal_construction.tex": "4f2166d77be1ff16ed7b02a160cf92f516b8e11d49ddf3b9037c0d490c0cf9a4",
+    "supp_sections/S03_comparisons_statistics.tex": "6fdc5ead40f76645fe8d95aff2ae08fcce93b19d297cbd149a1f599684175804",
+    "supp_sections/S04_condition_contrasts.tex": "e5b254ebc63b83b644c07acfd7bbd43088b48adcfbb8037c23341631093e4c90",
+    "supp_sections/S04_extended_results.tex": "844ace3d4fd98dc28cb973d03a7a46b17371c22d72613e061e6197d582aeacc3",
+    "supp_sections/S05_edge_measurement.tex": "12248316e398e32519973511b45759bb4c6bc5bc4764f348c4439ccf5dd50847",
+    "supp_sections/S06_qualitative_artifacts.tex": "176443b1833bf53c2fe60883ae2b78e7c8f3a3d20ffe2ba150387f1d75aca588",
+    "supp_sections/S07_closed_loop_diagnostics.tex": "e2f2cb22750e8a9909d95c5d1aa72d420b87dbf1130bb77fce84a8be8f94a7e6",
+    "supplementary.tex": "da678486bbf437f9e268db562d142a86b23793305008cecc9a932c5c30b06754"
+  }
+}

@@ -1,60 +1,87 @@
-# CIRA
+# CIRA native detector implementation — 2026-11-03
 
-**Composition-Informed Receiver Adaptation** for continual detector adaptation in decentralized learning.
+The current source passed **214 CPU software tests**. Independent DPFL and DSpodFL round cores now operate on full native detectors. Bounded RTX 5080 checks cover YOLOv8n, YOLO11n and YOLO26n, four replicas per method, native loss/update/decoding, and checkpoint reload. These checks use random eight-class initializations and are not SOURCE training, native DEV results, formal AP or Orin measurements.
 
-This repository contains the current core implementation, software tests, native-protocol templates, and a paper-to-code mapping. The Python package remains `softcas` for compatibility with existing commands and records.
+DA-DPFL and DCFCL have selected tested kernels; the other method ports and full external-study qualification are still incomplete. The exact eight-method status and primary sources are in [detector baseline status](docs/DETECTOR_BASELINES.md). The implemented external executor is not a replacement for these algorithms.
 
-## Current status
+Personal configuration is blank in [local settings template](configs/local.private.example.json). Copy it to an ignored `local.private.json`; fill device addresses, login information and real asset paths locally. Remote address placeholders in release templates are empty strings. No credentials or local user paths are supplied.
 
-The source implements complete detector states, local adapter revision, soft receiving, shared archives, parent-relative gain feedback, ridge prediction, budget admission, audit, and fallback. The current source passed **199 CPU software tests**.
+Runtime interventions, exact native asset binding, DEV locking and formal execution checks remain implemented; see [execution commands](docs/EXECUTION_BINDING.md). Model weights, images, private settings and device measurements are not in this source release. Earlier entries below are historical checks, not the current verification count.
 
-The runtime now applies empty/DEV-locked weak donor policies and the registered once-only half-payload interruption in real TCP exchange. The external execution module binds source/runner/qualification identities, launches an explicit subprocess, validates deployed-state matrices and actual resource fields, and preserves timeout/failure records. The binding workflow locks the paper's eight Local candidates, four matched-rate Serial rules and Q0--Q6 using DEV seeds 9001--9003; it materializes exact native asset bindings and blocker reports.
+# CIRA implementation
 
-These execution paths are implemented. The eight external algorithms' native detector ports have not all been implemented and qualified. Actual eight-class checkpoints, verified scene registries, native DEV outcomes and Orin calibration files are not supplied by software tests. Native training and device measurement have not been performed. See [execution and binding commands](docs/EXECUTION_BINDING.md), [paper alignment](docs/PAPER_ALIGNMENT.md), and [external method source registry](configs/external_baselines.json).
+当前论文名为 CIRA，Python 包名和 `method="softcas"` 保留旧名称以兼容已有命令与记录。当前方法依据为 `../output/CIRA_当前唯一版本_20261101/paper/`，不再用旧 SoftCAS 稿件作为新协议的依据。
 
-The numerical policy study and independent reduced feature-module experiment in the manuscript use separate execution objects. Their complete result-generation packages are not included in this native source snapshot. No paper scores or plots were changed by this implementation update.
+2026-11-02 已修补核心执行、候选构造、检查点、统计/输出及四节点调度，并运行当前版本的 CPU 回归和短程行为检查。验证数字、源码哈希与日志见 [修补说明](docs/CIRA_REPAIR_20261102.md) 及 `artifacts/repair_20261102/verification.json`。本轮没有执行原生 YOLO 训练、GPU/Jetson 服务或设备测量。历史20261021材料保留，不能代替当前验证。
 
-## Install and check
+随后依据论文—代码对应审查补齐了正式上下文传播、同候选池决策审计、原生快照机制接口及 N01—N12 去重注册；当前全套 **145项测试通过**。新增真实梯度学习示例与入口见 [对应缺口修补](docs/CIRA_ALIGNMENT_REPAIR_20261102.md)。旧100项检查与零反馈示例作为历史记录保留。
 
-Use Python 3.12 for the checked CPU environment. From a new environment:
+## 核心实现
 
-```bash
-python -m venv .venv
-# Activate .venv for your operating system, then:
-python -m pip install torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cpu
-python -m pip install -e '.[yolo]'
-python -m pip install numpy==2.3.5 scipy==1.18.1
-python -m unittest discover -s tests -v
-python -m softcas.production --help
+| 范围 | 入口 |
+| --- | --- |
+| 完整状态、冻结基座/外部路径、软接收、Fresh/Refine/成员修改/Import | `state.py`, `model.py`, `actions.py`, `engine.py` |
+| 25维执行前特征、ridge增益、PCG64命名流、有界候选、共享档案 | `controller.py`, `proposals.py` |
+| 阶段epoch额度、按裁剪长度执行、逐epoch洗牌、失败消耗记录 | `fitting.py`, `engine.py`, `data.py` |
+| 精确包版本、TCP、F/E/B/W账本、持久化、审计回退 | `cache.py`, `transport.py`, `resources.py`, `storage.py` |
+| 四物理节点计划、独立节点执行与完整seed合并 | `experiment.py`, `production.py` |
+| 独立测量session身份、每次50预热/200计时的参考配置、重复内汇总 | `device.py`, `measurement.py` |
+| 配置×上下文诊断、D/V/A/T、配对统计与表格接口 | `diagnostics.py`, `evaluation.py`, `reporting.py`, `tables.py` |
+
+## 两种协议
+
+`configs/fixture.json` 是旧CPU功能检查，步骤单位为batch更新，输出 `SYNTHETIC_BEHAVIOR_ONLY` / `synthetic_quality_NOT_AP`。
+
+`configs/native_r1000.json` 显式启用当前原生协议：64次尝试、65次V评价、K=3、8状态档案、每阶段500累计epoch、本地/接收块上限32/16epoch、batch8、AdamW。R300/R500分别见 `native_r300.json` / `native_r500.json`，每阶段150/250epoch；三者都是完整四阶段独立预算条件。
+
+原生配置尚为开发模板。未标定F/W额度置0，避免把旧fixture成本当硬件校准；成本文件、特征尺度、开发选型与实际基座/数据仍需绑定。FORMAL入口会校验确认字段、原生epoch语义及成本/设备记录。
+
+当前硬件模板使用4台 **Jetson Orin Nano 8GB** 在线更新，RTX 5080用于SOURCE准备/离线分析。三种检测器有各自的端口模板；需在实际八类基座上检查张量形状。安装和设备服务说明另见 `docs/WINDOWS_5080_ORIN.md`，旧文档中的单机RTX逻辑客户端是另一种执行方式。
+
+## 本地检查
+
+在本目录使用已有CPU环境：
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe -m softcas.production --help
+.\.venv\Scripts\python.exe -m softcas.cli check-config --config configs/native_r1000.json
 ```
 
-`requirements-lock.txt` records the checked core CPU versions. GPU and Jetson installation references are in [the environment guide](docs/WINDOWS_5080_ORIN.md). The checked local environment is not an independently verified clean installation on every platform.
+## 原生四节点入口
 
-## Source layout
+填写 `configs/native_r1000_matrix.example.json` 中真实地址、明确起始时刻/逐轨迹时间、真实资产和开发锁定参数后生成计划：
 
-| Path | Content |
-| --- | --- |
-| `softcas/state.py`, `model.py`, `actions.py` | Complete state, local adapters, receiving, and state construction |
-| `softcas/controller.py`, `proposals.py`, `engine.py` | Candidate pool, ridge prediction, resource-aware scheduling, archive, and audit |
-| `softcas/data.py`, `fitting.py`, `evaluation.py` | D/V/A/T roles, epoch accounting, and evaluation identities |
-| `softcas/cache.py`, `transport.py`, `storage.py` | Exact package versions, transfers, and retained states |
-| `softcas/study.py`, `conditions.py`, `study_execution.py` | Study registration, condition construction, and bound execution interfaces |
-| `softcas/mechanism.py`, `decision_audit.py`, `rgb_evaluation.py` | Snapshot comparisons, same-pool decision audit, and frozen RGB readout |
-| `softcas/production.py` | Explicit preparation, planning, execution, and reporting commands |
-| `configs/` | Functional fixtures and unbound native configuration templates |
-| `tests/` | CPU software regression tests |
-| `manifests/` | Source hashes, paper-source hashes, and snapshot validation |
+```powershell
+python -m softcas.production plan --spec configs/native_r1000_matrix.example.json --output plan.json
+```
 
-## Protocol templates
+四台各执行自己的编号；在Linux/Jetson同样使用已部署环境的Python：
 
-`configs/fixture.json` is a software-behavior fixture with `SYNTHETIC_BEHAVIOR_ONLY` and `synthetic_quality_NOT_AP` identities.
+```text
+python -m softcas.production run-plan --spec plan.json --node-id 0
+python -m softcas.production run-plan --spec plan.json --node-id 1
+python -m softcas.production run-plan --spec plan.json --node-id 2
+python -m softcas.production run-plan --spec plan.json --node-id 3
+```
 
-`configs/native_r1000.json` specifies four stages, 1000 fitting rounds per client, two epochs per effective fitting round, at most 500 epochs per stage, local/receiving blocks of at most 32/16 epochs, 64 attempts, 65 selection evaluations, three proposals per scheduling type, and an eight-state archive. R300 and R500 specify separate complete four-stage conditions.
+物理计划不带node-id会拒绝执行，不能在一台机器上顺序执行四个节点后称为四设备实验。每个完整seed须合并四个节点的 `trajectory.json`，`trajectory_groups`保存合并清单。报告中客户端不是独立seed。
 
-These native templates retain `DEVELOPMENT`, zero unbound F/W allowances, and pending asset/calibration fields. The Q0 and Serial 50:50 settings in `study.example.json` are unlocked examples. `study.native.example.json` instead loads an actual DEV lock. They are not the numerical paper study's locked Q2 choice. Set native parameters from an independent native DEV lock; do not copy numerical-study settings without that selection.
+矩阵目前实现6个内部方法和6项机制干预，三种检测器均安排消融；论文中8个外部文献方法的原生适配尚未实现，不能将数值代理登记算作官方基线运行。
 
-The target native hardware is four Jetson Orin Nano 8GB nodes; RTX 5080 serves SOURCE preparation and offline analysis. No native detector training or device measurements were performed during this source publication.
+`study-plan` 另行登记整个 N01—N12（含300/500/1000轮）矩阵：3420条去重训练配方、5130个分析视图；RGB端点评价不新增训练。它登记条件、复用与缺项，不是 `run-plan` 的可执行任务。`study.example.json` 中 Q0/Serial 50:50 只是未锁定的示例，所有配方保持 `planned_not_run/runnable=false`。
 
-## Scope of this source snapshot
+```powershell
+.\.venv\Scripts\python.exe -m softcas.production study-plan --spec configs/study.example.json --output study_plan.json
+.\.venv\Scripts\python.exe examples/run_learning_demo.py --output examples_output/new_learning_demo --clients 4 --stages 2 --seed 1001
+.\.venv\Scripts\python.exe -m softcas.production decision-audit --spec configs/decision_audit.example.json --output decision_audit.json
+.\.venv\Scripts\python.exe -m softcas.production mechanism --spec configs/mechanism.example.json --output new_snapshot_diagnostic
+```
 
-Datasets, image content, trained weights, runtime credentials, local environments, generated outputs, and historical archives are excluded. Native execution requires externally supplied assets and the external detector-port work listed in the alignment document. Repository publication does not mark those tasks complete.
+后两条先绑定真实动作日志／快照资产；示例路径不能直接用作真实输入。机制入口分别支持 `receiving / continuation / matched_work`。原生State没有优化器缓存，因此接续对照为完整状态、重置接收logit、重新初始化本地权重，不与旧特征模型的momentum对照混称。
+
+## 记录与范围
+
+每次动作保留父状态、候选参数、已准入拟合长度、执行前特征、命名随机流、实际完成/尝试步数、失败成本和部署身份。独立设备测量保留每个session的原始报告；session内P95先计算，再在一个轨迹内平均，内存取最大值，不把重复计时当新增seed。
+
+真实八类checkpoint、scene/role注册、Orin运行库与成本profile、网络地址和启动时刻需要实际输入。本次软件检查不提供这些设备或检测性能结果。历史说明见 `docs/CPU_REFERENCE_PRE_CUDA_20261021.md`。

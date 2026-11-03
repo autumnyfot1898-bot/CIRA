@@ -114,6 +114,11 @@ class Wire:
 
 class TcpClient:
     def __init__(self, node, host, port, ledger, token_env, timeout=30, records=None):
+        if (not isinstance(host, str) or not host.strip() or
+                host.startswith(('SET_', 'BIND_', 'REQUIRED'))):
+            raise ValueError('Fill the peer host in the local private configuration before connecting')
+        if type(port) is not int or not 0 < port < 65536:
+            raise ValueError('Fill a valid peer TCP port before connecting')
         self.node, self.host, self.port = node, host, port
         self.ledger, self.token_env, self.timeout = ledger, token_env, timeout
         self.records = records if records is not None else []

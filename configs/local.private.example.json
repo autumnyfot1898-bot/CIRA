@@ -1,0 +1,13 @@
+{
+  "schema": "cira.local_private.v1",
+  "_instruction": "Copy to local.private.json outside the public release. Personal fields intentionally blank. No experiment is implied by this template.",
+  "nodes": [
+    {"id": "0", "ssh_host": "", "ssh_username": "", "ssh_private_key": "", "ssh_port": 22, "peer_host": "", "remote_project_directory": "", "remote_python": ""},
+    {"id": "1", "ssh_host": "", "ssh_username": "", "ssh_private_key": "", "ssh_port": 22, "peer_host": "", "remote_project_directory": "", "remote_python": ""},
+    {"id": "2", "ssh_host": "", "ssh_username": "", "ssh_private_key": "", "ssh_port": 22, "peer_host": "", "remote_project_directory": "", "remote_python": ""},
+    {"id": "3", "ssh_host": "", "ssh_username": "", "ssh_private_key": "", "ssh_port": 22, "peer_host": "", "remote_project_directory": "", "remote_python": ""}
+  ],
+  "data": {"cityscapes_images": "", "cityscapes_annotations": "", "acdc_images": "", "acdc_annotations": "", "verified_scene_role_registry": ""},
+  "assets": {"YOLOv8n_checkpoint": "", "YOLO11n_checkpoint": "", "YOLO26n_checkpoint": "", "native_DEV_results": "", "Orin_calibration": ""},
+  "credentials": {"peer_token_env": "CIRA_PEER_TOKEN", "token_value": ""}
+}

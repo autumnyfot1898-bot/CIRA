@@ -1,3 +1,7 @@
+## Native baseline addition — 2026-11-03
+
+The source now contains independently implemented DPFL/DSpodFL round cores and selected DA-DPFL/DCFCL kernels. Actual native loss, update, decoding and checkpoint roundtrip probes cover three YOLO architectures. These probes do not qualify a complete continual-study baseline. The exact eight-method implementation gaps are listed in [DETECTOR_BASELINES.md](DETECTOR_BASELINES.md). The final code regression contains 214 tests. Personal configuration remains blank, and no source-trained base, native DEV result or Orin calibration is fabricated. Earlier paragraphs below describe the preceding execution release. The paper has changed since that release: PAPER_SOURCE_SHA256.json identifies the prior reference, while PAPER_OBSERVED_SHA256.json records the present hashes. Full alignment with those later manuscript changes has not been re-audited by this detector-code update.
+
 # Paper-to-code alignment — execution update 2026-11-03
 
 The current CIRA manuscript and supplement are identified by `manifests/PAPER_SOURCE_SHA256.json`. This update changes execution software and documentation, not manuscript formulas, figures or reported results.

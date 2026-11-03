@@ -1,0 +1,184 @@
+{
+  "probes": [
+    {
+      "scope": "native_interface_probe_NOT_FORMAL",
+      "status": "passed_native_loss_update_decode_probe",
+      "architecture": "YOLOv8n",
+      "seed": 1701,
+      "input_size": 640,
+      "manifest_sha256": "248ff3eb094e988d74f1649179d1a4d5af733398e1785df1764feb373af46a0b",
+      "torch": "2.7.1+cu128",
+      "device_name": "NVIDIA GeForce RTX 5080",
+      "initialization": "random eight-class detector; NOT SOURCE-trained",
+      "source_files_sha256": {
+        "baseline_algorithms.py": "94a6176d5af7e7c9877652e8d944ce044a58b9172a891e82e790a266b8577650",
+        "detector_baselines.py": "1859f0a422791a53a23e74dc8c85c8696ae3131b375d8258c47837de9beb5575",
+        "postprocess.py": "94ebf5e9d0ba20848f73311638216b69f40b602fae7f769d4f709797d341aa79"
+      },
+      "formal_AP": null,
+      "native_DEV_lock": null,
+      "Orin_measurements": null,
+      "report_sha256": "db799b7f2de4149734d035988bde344a83eba9c4b95c251dc9cee5b5e52524d7",
+      "ultralytics": "8.4.0",
+      "methods": {
+        "DSpodFL": {
+          "replicas": 4,
+          "losses": [
+            14.170090675354004,
+            15.323623657226562,
+            7.992680072784424,
+            20.146690368652344
+          ],
+          "parameter_updates_checked": true,
+          "finite_decoding_checked": true,
+          "checkpoint_roundtrips": 4,
+          "checkpoint_sha256": [
+            "ab2dead92973dae3007bee5c14550ec104c567c43f05755b1e2bf6677dcd4a58",
+            "cec522fa18789275da38ab6bb327fe282b45e5ea9b530e508fc89b36bc864970",
+            "02e7991b97dadb942bd2722e899004c30fadba17fdb3afe0b262089f5a8a42a9",
+            "cd5b93b6c45a91882a46f78b8293dd9704e16349397033965953faf57a2b757e"
+          ]
+        },
+        "DPFL": {
+          "replicas": 4,
+          "losses": [
+            14.170090675354004,
+            15.323623657226562,
+            7.992680072784424,
+            20.146690368652344
+          ],
+          "parameter_updates_checked": true,
+          "finite_decoding_checked": true,
+          "checkpoint_roundtrips": 4,
+          "checkpoint_sha256": [
+            "3d050a13779a3fa4bcfaf2795e086e876c7ccc0d5d2a473369cc6474819c4fe7",
+            "28f7bff0776acaaefbe555456bd32c6aa842183b25a6380ae9e61db4453d7039",
+            "8c387add51daabb0e6b878e73859e9df2cd6bd6ec0d9a7bbb15af01743764111",
+            "fde0d7e56a1df1697ab3fe21576ddb9e6f6aab759de2f1a444a413839f72d2bf"
+          ]
+        }
+      }
+    },
+    {
+      "scope": "native_interface_probe_NOT_FORMAL",
+      "status": "passed_native_loss_update_decode_probe",
+      "architecture": "YOLO11n",
+      "seed": 1701,
+      "input_size": 640,
+      "manifest_sha256": "248ff3eb094e988d74f1649179d1a4d5af733398e1785df1764feb373af46a0b",
+      "torch": "2.7.1+cu128",
+      "device_name": "NVIDIA GeForce RTX 5080",
+      "initialization": "random eight-class detector; NOT SOURCE-trained",
+      "source_files_sha256": {
+        "baseline_algorithms.py": "94a6176d5af7e7c9877652e8d944ce044a58b9172a891e82e790a266b8577650",
+        "detector_baselines.py": "1859f0a422791a53a23e74dc8c85c8696ae3131b375d8258c47837de9beb5575",
+        "postprocess.py": "94ebf5e9d0ba20848f73311638216b69f40b602fae7f769d4f709797d341aa79"
+      },
+      "formal_AP": null,
+      "native_DEV_lock": null,
+      "Orin_measurements": null,
+      "report_sha256": "f4be34d593b986df6b07e0d45c25648bfc074604df19ac491b9e155d56d82e08",
+      "ultralytics": "8.4.0",
+      "methods": {
+        "DSpodFL": {
+          "replicas": 4,
+          "losses": [
+            14.261557579040527,
+            16.136398315429688,
+            8.562478065490723,
+            21.735492706298828
+          ],
+          "parameter_updates_checked": true,
+          "finite_decoding_checked": true,
+          "checkpoint_roundtrips": 4,
+          "checkpoint_sha256": [
+            "77d8439db62ca49efacd1f950adadf4921a663fe8735e353af39eddae96d77df",
+            "3400db1a975b14b4774eeb6068b188be3ed1a5195dada8b8a4828ea391403b8a",
+            "645f4bfeced5d1a216118ed52159c8dfd1349997e308f4f3b1999964c5d66191",
+            "8c2d8c7399037a6a14195e75bc348bec9e60e72142ba01971336fdd7486a1e01"
+          ]
+        },
+        "DPFL": {
+          "replicas": 4,
+          "losses": [
+            14.261557579040527,
+            16.136398315429688,
+            8.562478065490723,
+            21.735492706298828
+          ],
+          "parameter_updates_checked": true,
+          "finite_decoding_checked": true,
+          "checkpoint_roundtrips": 4,
+          "checkpoint_sha256": [
+            "435271586f4d0e038cec685a74e3bdd6957afb6bc75fa9bcd7dfc53a0c4e00eb",
+            "96e820811c477224143ab247a29d68c648c998d2bd88da609f6f18323c61fb5c",
+            "9f7090e10c8ad683aa4926cd5e3d76fcd11bd81c2ea6a227034e445aa71e3d82",
+            "7c185aaf3bb6bf08d7d2c55ca0b65ffdf3b98fd99e04eeb4d51574d911133b38"
+          ]
+        }
+      }
+    },
+    {
+      "scope": "native_interface_probe_NOT_FORMAL",
+      "status": "passed_native_loss_update_decode_probe",
+      "architecture": "YOLO26n",
+      "seed": 1701,
+      "input_size": 640,
+      "manifest_sha256": "248ff3eb094e988d74f1649179d1a4d5af733398e1785df1764feb373af46a0b",
+      "torch": "2.7.1+cu128",
+      "device_name": "NVIDIA GeForce RTX 5080",
+      "initialization": "random eight-class detector; NOT SOURCE-trained",
+      "source_files_sha256": {
+        "baseline_algorithms.py": "94a6176d5af7e7c9877652e8d944ce044a58b9172a891e82e790a266b8577650",
+        "detector_baselines.py": "1859f0a422791a53a23e74dc8c85c8696ae3131b375d8258c47837de9beb5575",
+        "postprocess.py": "94ebf5e9d0ba20848f73311638216b69f40b602fae7f769d4f709797d341aa79"
+      },
+      "formal_AP": null,
+      "native_DEV_lock": null,
+      "Orin_measurements": null,
+      "report_sha256": "6bdb1989a1e45a8fd0fb8cb45c6eeb2fb318e7ca6ff158da2987f39ea246f6f5",
+      "ultralytics": "8.4.0",
+      "methods": {
+        "DSpodFL": {
+          "replicas": 4,
+          "losses": [
+            12.504644393920898,
+            12.565147399902344,
+            10.808088302612305,
+            10.505765914916992
+          ],
+          "parameter_updates_checked": true,
+          "finite_decoding_checked": true,
+          "checkpoint_roundtrips": 4,
+          "checkpoint_sha256": [
+            "6033e39f3cea073e0735f790d390188b7fabb2daf89d48e8a3a673f75e559c61",
+            "eb3f2e01c72e2b0ead832e85ef699760d3896cf61ffbaf82a299b5a00b924222",
+            "77ca1f510503bb4278959a7a189e29ad33ab1e2abaa69ea0c3f20acc985b3adf",
+            "f62e739dcf3e174071c26a77b4cf40954f60c6c02754d28b1204f652bb18903f"
+          ]
+        },
+        "DPFL": {
+          "replicas": 4,
+          "losses": [
+            12.504644393920898,
+            12.565147399902344,
+            10.808088302612305,
+            10.505765914916992
+          ],
+          "parameter_updates_checked": true,
+          "finite_decoding_checked": true,
+          "checkpoint_roundtrips": 4,
+          "checkpoint_sha256": [
+            "a6f92de0fe57b8dc676f9fa04c9f9723a2fc10b16c0cd69d95484b2235ccad19",
+            "a234e8d392a1bd0165544f869e164e69b1df52779f80bc372dc7b8e955b50c16",
+            "2e2235e1870d5398606b25e74aa73680602ed0758a77a20d3c59c92637d6567f",
+            "460dae476013bb85d3bc4e61606780a06b56d7bcae9ff86ce17c90c250925ab5"
+          ]
+        }
+      }
+    }
+  ],
+  "independent_performance_experiments": 0,
+  "client_updates_checked": 24,
+  "dataset_images_labels_and_weights_included": false
+}

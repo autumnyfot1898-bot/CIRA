@@ -132,7 +132,7 @@
   "physical_nodes": {
     "0": {
       "endpoint": {
-        "host": "SET_JETSON_0_ADDRESS",
+        "host": "",
         "port": 18760
       },
       "config": "configs/native_r1000.json",
@@ -148,7 +148,7 @@
     },
     "1": {
       "endpoint": {
-        "host": "SET_JETSON_1_ADDRESS",
+        "host": "",
         "port": 18761
       },
       "config": "configs/native_r1000.json",
@@ -164,7 +164,7 @@
     },
     "2": {
       "endpoint": {
-        "host": "SET_JETSON_2_ADDRESS",
+        "host": "",
         "port": 18762
       },
       "config": "configs/native_r1000.json",
@@ -180,7 +180,7 @@
     },
     "3": {
       "endpoint": {
-        "host": "SET_JETSON_3_ADDRESS",
+        "host": "",
         "port": 18763
       },
       "config": "configs/native_r1000.json",

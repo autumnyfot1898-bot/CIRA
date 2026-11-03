@@ -14,15 +14,42 @@
   },
   "fit_batch_size": 1,
   "evaluation_batch_size": 1,
-  "optimizer": {"name": "SGD", "momentum": 0.0, "weight_decay": 0.0},
+  "optimizer": {
+    "name": "SGD",
+    "momentum": 0.0,
+    "weight_decay": 0.0
+  },
   "flop_meter": "scalar_ops_mac2_v1",
-  "meter": {"strict": false, "enforce_F": true, "overrides": {}},
+  "meter": {
+    "strict": false,
+    "enforce_F": true,
+    "overrides": {}
+  },
   "cost_profile": null,
-  "calibration": {"repeats": 3, "admission_safety": {"F": 1.2, "W": 1.5}},
+  "calibration": {
+    "repeats": 3,
+    "admission_safety": {
+      "F": 1.2,
+      "W": 1.5
+    }
+  },
   "cache_bytes": 134217728,
-  "storage": {"cache_bytes": 134217728, "checkpoint_bytes": 536870912, "transient_bytes": 268435456},
-  "working_memory": {"process_bytes": null, "minimum_free_bytes": 0, "cuda_bytes": null},
-  "device_limits": {"deployed_tensor_bytes": null, "deployed_bytes": null, "peak_process_ram_bytes": null, "p95_ms": null},
+  "storage": {
+    "cache_bytes": 134217728,
+    "checkpoint_bytes": 536870912,
+    "transient_bytes": 268435456
+  },
+  "working_memory": {
+    "process_bytes": null,
+    "minimum_free_bytes": 0,
+    "cuda_bytes": null
+  },
+  "device_limits": {
+    "deployed_tensor_bytes": null,
+    "deployed_bytes": null,
+    "peak_process_ram_bytes": null,
+    "p95_ms": null
+  },
   "remote_timeout_seconds": 1800,
   "transport": {
     "bind": "127.0.0.1",
@@ -34,9 +61,23 @@
   },
   "deployment": {
     "mode": "remote_orin",
-    "default_endpoint": {"host": "SET_ORIN_ADDRESS", "port": 18770, "token_env": "SOFTCAS_PEER_TOKEN"},
+    "default_endpoint": {
+      "host": "",
+      "port": 18770,
+      "token_env": "SOFTCAS_PEER_TOKEN"
+    },
     "endpoints": {}
   },
-  "serving_budget": {"F": 1000000000000, "E": 0, "B": 1073741824, "W": 7200},
-  "offline_budget": {"F": 100000000000000, "E": 0, "B": 10737418240, "W": 86400}
+  "serving_budget": {
+    "F": 1000000000000,
+    "E": 0,
+    "B": 1073741824,
+    "W": 7200
+  },
+  "offline_budget": {
+    "F": 100000000000000,
+    "E": 0,
+    "B": 10737418240,
+    "W": 86400
+  }
 }

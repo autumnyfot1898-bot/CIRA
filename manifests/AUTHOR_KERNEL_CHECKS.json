@@ -1,0 +1,50 @@
+{
+  "scope": "selected_author_kernel_equivalence_NOT_FULL_ALGORITHM",
+  "DSpodFL_ATC_snapshot_case": "passed",
+  "DPFL_seeded_subset_cases": 25,
+  "DA_DPFL_wait_cases": 9,
+  "DA_DPFL_PQ_cases": 10,
+  "status": "passed",
+  "source_functions": [
+    {
+      "file": "ShahryarBQ\\DSpodFL\\src\\Agent.py",
+      "sha256": "9fba2d7930ca8d1b83d4514f58c880d546af93017e2e74437c38f461f4078a7e",
+      "function": "run_step1"
+    },
+    {
+      "file": "ShahryarBQ\\DSpodFL\\src\\Agent.py",
+      "sha256": "9fba2d7930ca8d1b83d4514f58c880d546af93017e2e74437c38f461f4078a7e",
+      "function": "run_step2"
+    },
+    {
+      "file": "ShahryarBQ\\DSpodFL\\src\\Agent.py",
+      "sha256": "9fba2d7930ca8d1b83d4514f58c880d546af93017e2e74437c38f461f4078a7e",
+      "function": "event_aggregation"
+    },
+    {
+      "file": "ShahryarBQ\\DSpodFL\\src\\Agent.py",
+      "sha256": "9fba2d7930ca8d1b83d4514f58c880d546af93017e2e74437c38f461f4078a7e",
+      "function": "calculate_aggregation_weight"
+    },
+    {
+      "file": "salmakh1\\DPFL\\selection\\bandits.py",
+      "sha256": "554fc6dd25d39c1573fed706302d5738ef070116cb49b3f97aa2e02245dbe53a",
+      "function": "optimized_rgl_p"
+    },
+    {
+      "file": "EricLoong\\da-dpfl\\fedml_api\\standalone\\dadpfl\\dadpfl_api_sch.py",
+      "sha256": "29675f411feee19cee95a8d1bcd657c2d531888f279d4b3a287ea08643cf7912",
+      "function": "generate_stepwise_distributed_ns"
+    },
+    {
+      "file": "EricLoong\\da-dpfl\\fedml_api\\standalone\\dadpfl\\sp_functions.py",
+      "sha256": "d84ded570fa1568c421b91ed9b375289fcc6a43a5c37638ecd2987c414f525b7",
+      "function": "make_si"
+    },
+    {
+      "file": "EricLoong\\da-dpfl\\fedml_api\\standalone\\dadpfl\\sp_functions.py",
+      "sha256": "d84ded570fa1568c421b91ed9b375289fcc6a43a5c37638ecd2987c414f525b7",
+      "function": "make_bound_si"
+    }
+  ]
+}

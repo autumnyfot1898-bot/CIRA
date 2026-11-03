@@ -12,11 +12,35 @@
   "detector_config": "configs/detector.example.json",
   "registry": "data/ACDC/registry_9001.json",
   "registry_id": "ACDC_9001",
-  "clients": ["0"],
-  "federation_clients": ["0", "1", "2", "3"],
+  "clients": [
+    "0"
+  ],
+  "federation_clients": [
+    "0",
+    "1",
+    "2",
+    "3"
+  ],
   "epoch_start_unix": null,
-  "external_peers": {"1": {"host": "SET_PEER_1", "port": 18760}, "2": {"host": "SET_PEER_2", "port": 18760}, "3": {"host": "SET_PEER_3", "port": 18760}},
+  "external_peers": {
+    "1": {
+      "host": "",
+      "port": 18760
+    },
+    "2": {
+      "host": "",
+      "port": 18760
+    },
+    "3": {
+      "host": "",
+      "port": 18760
+    }
+  },
   "contact_trace": "configs/contacts.example.json",
   "output": "runs/physical_node0_development",
-  "overrides": {"transport": {"bind": "0.0.0.0"}}
+  "overrides": {
+    "transport": {
+      "bind": "0.0.0.0"
+    }
+  }
 }

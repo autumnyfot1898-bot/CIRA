@@ -1,7 +1,13 @@
-param([string]$Python = 'C:\Users\jwq\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe',
-      [string]$VerifiedPackages = 'D:\1sunpinghan\_tefed_release_build_20261018\uv_cpu_env\Lib\site-packages',
+param([string]$Python = 'python',
+      [string]$VerifiedPackages = '',
       [switch]$Install)
 $ErrorActionPreference = 'Stop'
+if (!$Install -and [string]::IsNullOrWhiteSpace($VerifiedPackages)) {
+    throw 'Fill -VerifiedPackages with your local verified dependency directory, or explicitly choose -Install.'
+}
+if (!$Install -and !(Test-Path -LiteralPath (Join-Path $VerifiedPackages 'torch\__init__.py'))) {
+    throw 'Verified package directory missing; fill -VerifiedPackages or explicitly choose -Install.'
+}
 & $Python -m venv "$PSScriptRoot\.venv"
 if ($LASTEXITCODE -ne 0) { throw 'venv creation failed' }
 $TaskPython = "$PSScriptRoot\.venv\Scripts\python.exe"
