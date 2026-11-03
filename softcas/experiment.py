@@ -31,6 +31,7 @@ from .runtime import MemoryGuard
 from .state import Structure, FitSettings, State, canonical, digest
 from .storage import BoundedStore, CheckpointStore, atomic_write
 from .transport import PeerService, PeerServer, LiveExchange, TcpClient
+from .interventions import RuntimeInterventions
 
 
 def read_json(path):
@@ -81,6 +82,8 @@ def trajectory_config(job):
 
 def execute_trajectory(job, resume=False):
     job = copy.deepcopy(job)
+    from .interventions import validate_interventions
+    validate_interventions(job.get('interventions'))
     if "study_trajectory_id" in job:
         from .study_execution import preflight_job
         preflight_job(job)
@@ -129,6 +132,7 @@ def execute_trajectory(job, resume=False):
     if origin is None:
         origin = time.time()
     trace = ContactTrace(read_json(job["contact_trace"]), origin)
+    interventions = RuntimeInterventions(job.get('interventions'), root / 'runtime_interventions.json', trace.events, origin)
     serving, services, servers, caches, stores, states, evaluators = {}, {}, [], {}, {}, {}, {}
     all_transfers, matrix, stage_reports = [], [], []
     offline = Ledger(Cost(**config["offline_budget"]), Cost(**config["offline_budget"]))
@@ -145,17 +149,18 @@ def execute_trajectory(job, resume=False):
                 source.used[event["scope"]] += Cost(**event["cost"])
             serving[client] = source
             package_store = BoundedStore(directory / "cache", config["storage"]["cache_bytes"], config["storage"]["transient_bytes"])
-            caches[client] = PackageCache(config["cache_bytes"], backend.specs, package_store)
+            caches[client] = PackageCache(config["cache_bytes"], backend.specs, package_store, interventions.allows)
             stores[client] = CheckpointStore(BoundedStore(directory / "retained", config["storage"]["checkpoint_bytes"],
                                                        config["storage"]["transient_bytes"]))
             fixed = config["fixed"]
             states[client] = State.load(progress["states"][client]) if client in progress["states"] else initial_state(
                 backend, caches[client], Structure(tuple(fixed["mask"]), fixed["ratio"]), FitSettings(fixed["lr"], fixed["residual"]), job["seed"])
             caches[client].pin("deployed", states[client].C)
+            interventions.require_state(states[client])
             stores[client].pin("deployed", [states[client]])
             evaluators[client] = EvaluationCache()
             service = PeerService(client, source, config["transport"]["token_env"], directory / "publications",
-                                  config["transport"]["source_payload_quota"])
+                                  config["transport"]["source_payload_quota"], interventions=interventions)
             service.records = DurableRecords(directory / "source_transfers.jsonl")
             service.restore_quota()
             services[client] = service
@@ -194,7 +199,7 @@ def execute_trajectory(job, resume=False):
                      for i, other in enumerate(clients) if other != client}
             peers.update({str(owner): address for owner, address in job.get("external_peers", {}).items() if str(owner) != client})
             exchange = LiveExchange(client, cache, ledger, peers, config["transport"]["token_env"], trace.gate(client),
-                                    config["transport"]["timeout_seconds"])
+                                    config["transport"]["timeout_seconds"], interventions=interventions, stage=stage)
             exchange.records = DurableRecords(directory / "controller_transfers.jsonl")
             endpoint = config["deployment"]["endpoints"].get(client) or config["deployment"]["default_endpoint"]
             release = RemoteReleaseService(endpoint, job["registry_id"], client, formal, identity[:20] + "-" + client)
@@ -206,6 +211,7 @@ def execute_trajectory(job, resume=False):
                 try:
                     saved = stores[client].load(state_hash)
                     if all(k in cache for k in saved.C):
+                        interventions.require_state(saved)
                         retained.append(saved)
                 except (OSError, KeyError):
                     continue
@@ -295,6 +301,7 @@ def execute_trajectory(job, resume=False):
                                            "deployed_device.json") for c in clients}
         device_fields = ("active_external_paths", "deployed_tensor_bytes", "deployed_bytes", "peak_process_ram_bytes", "p95_ms")
         trajectory = {"purpose": config["purpose"], "formal": formal, "metric": "AP50:95", "method": job["method"], "ablation": job.get("ablation", "none"),
+                      'runtime_interventions': interventions.summary(),
                       "cell": job["dataset"] + "/" + job["detector"], "seed": job["seed"],
                       **{key: final[key] for key in ("seen", "current", "forget", "bwt", "minimum_client_seen")},
                       "F_total": total_F if computation_complete else None, "F_known_lower_bound": total_F,
@@ -477,6 +484,10 @@ def join_physical_nodes(node_files, output):
     contract = ("cell", "seed", "method", "ablation", "purpose", "metric")
     if any(any(n[k] != nodes[0][k] for k in contract) for n in nodes):
         raise ValueError("Cannot join different seeds, bases/cells, methods or interventions")
+    if any('runtime_interventions' in n for n in nodes):
+        policies=[n.get('runtime_interventions',{}).get('policy') for n in nodes]
+        if any(p is None or p!=policies[0] for p in policies):
+            raise ValueError('Cannot join nodes with different applied runtime interventions')
     if any("study_trajectory_id" in n for n in nodes):
         if any(n.get("study_trajectory_id") != nodes[0].get("study_trajectory_id") or
                n.get("study_recipe") != nodes[0].get("study_recipe") for n in nodes):
@@ -524,5 +535,8 @@ def join_physical_nodes(node_files, output):
     if "study_trajectory_id" in nodes[0]:
         value.update(study_trajectory_id=nodes[0]["study_trajectory_id"], study_recipe=nodes[0]["study_recipe"],
                      input_manifests=[n.get("input_manifest", {}) for n in nodes])
+    if 'runtime_interventions' in nodes[0]:
+        value['runtime_interventions']={'policy':nodes[0]['runtime_interventions']['policy'],
+                                       'node_events':{str(i):n['runtime_interventions']['events'] for i,n in enumerate(nodes)}}
     atomic_write(output / "trajectory.json", canonical(value))
     return value

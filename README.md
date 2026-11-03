@@ -6,11 +6,13 @@ This repository contains the current core implementation, software tests, native
 
 ## Current status
 
-The source implements complete detector states, local adapter revision, soft receiving, shared archives, parent-relative gain feedback, ridge prediction, budget admission, audit, and fallback. The source snapshot dated 2026-11-03 passed **166 CPU software tests**.
+The source implements complete detector states, local adapter revision, soft receiving, shared archives, parent-relative gain feedback, ridge prediction, budget admission, audit, and fallback. The current source passed **199 CPU software tests**.
 
-The native study is not ready to reproduce all manuscript results. External-baseline dispatch refers to a missing `softcas.external` module; donor policies and the registered half-payload interruption have not been connected to trajectory execution; native data, development locks, costs, and device profiles remain unbound. See [implementation status and paper alignment](docs/PAPER_ALIGNMENT.md).
+The runtime now applies empty/DEV-locked weak donor policies and the registered once-only half-payload interruption in real TCP exchange. The external execution module binds source/runner/qualification identities, launches an explicit subprocess, validates deployed-state matrices and actual resource fields, and preserves timeout/failure records. The binding workflow locks the paper's eight Local candidates, four matched-rate Serial rules and Q0--Q6 using DEV seeds 9001--9003; it materializes exact native asset bindings and blocker reports.
 
-The manuscript separately reports a numerical policy study and an independent reduced feature-module experiment, with native detector and device protocols specified as plans. This repository's native implementation is a separate execution object. Passing software tests does not establish those experimental results or device measurements. The corresponding result-generation packages are not included in this initial source snapshot.
+These execution paths are implemented. The eight external algorithms' native detector ports have not all been implemented and qualified. Actual eight-class checkpoints, verified scene registries, native DEV outcomes and Orin calibration files are not supplied by software tests. Native training and device measurement have not been performed. See [execution and binding commands](docs/EXECUTION_BINDING.md), [paper alignment](docs/PAPER_ALIGNMENT.md), and [external method source registry](configs/external_baselines.json).
+
+The numerical policy study and independent reduced feature-module experiment in the manuscript use separate execution objects. Their complete result-generation packages are not included in this native source snapshot. No paper scores or plots were changed by this implementation update.
 
 ## Install and check
 
@@ -49,10 +51,10 @@ python -m softcas.production --help
 
 `configs/native_r1000.json` specifies four stages, 1000 fitting rounds per client, two epochs per effective fitting round, at most 500 epochs per stage, local/receiving blocks of at most 32/16 epochs, 64 attempts, 65 selection evaluations, three proposals per scheduling type, and an eight-state archive. R300 and R500 specify separate complete four-stage conditions.
 
-These native templates retain `DEVELOPMENT`, zero unbound F/W allowances, and pending asset/calibration fields. The Q0 and Serial 50:50 settings in `study.example.json` are unlocked examples. They are not the numerical paper study's locked Q2 choice. Set native parameters from an independent native DEV lock; do not copy numerical-study settings without that selection.
+These native templates retain `DEVELOPMENT`, zero unbound F/W allowances, and pending asset/calibration fields. The Q0 and Serial 50:50 settings in `study.example.json` are unlocked examples. `study.native.example.json` instead loads an actual DEV lock. They are not the numerical paper study's locked Q2 choice. Set native parameters from an independent native DEV lock; do not copy numerical-study settings without that selection.
 
 The target native hardware is four Jetson Orin Nano 8GB nodes; RTX 5080 serves SOURCE preparation and offline analysis. No native detector training or device measurements were performed during this source publication.
 
 ## Scope of this source snapshot
 
-Datasets, image content, trained weights, runtime credentials, local environments, generated outputs, and historical archives are excluded. Native execution requires externally supplied assets and the missing implementation work listed in the alignment document. Repository publication does not mark those tasks complete.
+Datasets, image content, trained weights, runtime credentials, local environments, generated outputs, and historical archives are excluded. Native execution requires externally supplied assets and the external detector-port work listed in the alignment document. Repository publication does not mark those tasks complete.

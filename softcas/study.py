@@ -154,6 +154,8 @@ def summarize_completed(study, results, metric="seen"):
         value = row.get(metric)
         valid = (row.get("complete") is True and isinstance(value, (int, float)) and
                  not isinstance(value, bool) and math.isfinite(value))
+        if row.get('metric') is not None and row['metric']!='AP50:95':
+            valid=False
         if valid and metric in ("seen", "current", "forget", "minimum_client_seen", "ap50", "ap75") and not 0 <= value <= 1:
             raise ValueError("AP/forget endpoints must use fractional units [0,1]")
         if valid and metric == "bwt" and not -1 <= value <= 1:

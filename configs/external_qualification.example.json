@@ -1,0 +1,30 @@
+{
+  "schema": "cira.external_qualification.v1",
+  "method": "DPFL",
+  "source_identity": null,
+  "validated": false,
+  "task": "object_detection",
+  "metric": "AP50:95",
+  "score_units": "fraction",
+  "datasets": [
+    "ControlledFog",
+    "ACDC"
+  ],
+  "detectors": [
+    "YOLOv8n",
+    "YOLO11n",
+    "YOLO26n"
+  ],
+  "checks": {
+    "algorithm_preserved": false,
+    "detector_loss_and_decode": false,
+    "D_only_fitting": false,
+    "V_only_selection": false,
+    "T_only_reporting": false,
+    "topology_and_history_declared": false,
+    "costs_and_failures_recorded": false,
+    "conditions_applied": false
+  },
+  "evidence": [],
+  "note": "Fill only from actual code review and detector-port integration evidence. This example is intentionally unqualified."
+}

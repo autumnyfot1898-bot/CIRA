@@ -192,7 +192,8 @@ class SenderQueue:
 
 
 class PeerService:
-    def __init__(self, owner, ledger, token_env, publication_root, quota, maximum_upload=1 << 30, jobs=None):
+    def __init__(self, owner, ledger, token_env, publication_root, quota, maximum_upload=1 << 30, jobs=None,
+                 interventions=None):
         self.owner, self.ledger, self.token_env = owner, ledger, token_env
         self.root = Path(publication_root)
         self.root.mkdir(parents=True, exist_ok=True)
@@ -200,6 +201,7 @@ class PeerService:
         self.queue, self.lock = SenderQueue(), threading.RLock()
         self.records = []
         self.remaining_quota = quota
+        self.interventions = interventions
 
     def publish(self, package):
         from .storage import atomic_write
@@ -216,10 +218,18 @@ class PeerService:
         legs = {r["leg"]: r["bytes"] for r in self.records if r.get("leg", "").endswith(":payload:tx")}
         self.remaining_quota = max(0, self.remaining_quota - sum(legs.values()))
 
-    def catalogue(self, limit):
+    def catalogue(self, limit, allowlist=None):
         now, versions = time.time(), []
+        if allowlist is not None:
+            from .interventions import is_hash
+            if not isinstance(allowlist, list) or len(allowlist) > 4096 or not all(map(is_hash, allowlist)):
+                raise ValueError('Invalid exact donor allowlist')
+            allowlist = frozenset(allowlist)
         with self.lock:
-            for file in sorted(self.root.glob("*.json"))[:limit]:
+            files = [p for p in sorted(self.root.glob('*.json'))
+                     if (allowlist is None or p.stem in allowlist) and
+                     (self.interventions is None or self.interventions.allows(p.stem))]
+            for file in files[:limit]:
                 package = Package.read(file.read_bytes())
                 if package.owner == self.owner and package.available <= now and package.created <= now:
                     versions.append({"hash": package.hash, "owner": self.owner, "observed": now,
@@ -231,6 +241,7 @@ class PeerService:
     def handle(self, sock):
         started, prior_W = time.perf_counter(), self.ledger.used["search"].W
         wire = Wire(sock, self.ledger, self.owner, "unknown", uuid.uuid4().hex, "search", self.records)
+        payload_started = False
         try:
             request = wire.frame("request")
             wire.reidentify(str(request["id"]), str(request["node"]))
@@ -241,11 +252,13 @@ class PeerService:
             wire.operation = kind
             if kind == "catalogue":
                 limit = min(32, max(0, int(payload.get("limit", 32))))
-                wire.send_frame({"ok": True, "result": self.catalogue(limit)}, "response")
+                wire.send_frame({"ok": True, "result": self.catalogue(limit, payload.get('allowlist'))}, "response")
             elif kind == "get":
                 key = payload["hash"]
                 if len(key) != 64 or any(c not in "0123456789abcdef" for c in key) or payload.get("offset", 0) != 0:
                     raise ValueError("Exact hash and zero restart offset required")
+                if self.interventions is not None and not self.interventions.allows(key):
+                    raise ValueError('External package excluded by donor policy')
                 self.queue.acquire(wire.peer, 30)
                 try:
                     data = (self.root / (key + ".json")).read_bytes()
@@ -253,14 +266,25 @@ class PeerService:
                     if package.hash != key or package.owner != self.owner or package.available > time.time():
                         raise ValueError("Unavailable immutable package")
                     wire.send_frame({"ok": True, "download_bytes": len(data), "result": {"hash": key}}, "response")
+                    payload_started = True
                     with self.lock:
                         allowance = min(len(data), self.remaining_quota)
+                    cut = self.interventions.payload_limit(wire.peer, self.owner, payload.get('stage'), len(data), wire.request_id) if self.interventions else None
+                    if cut is not None:
+                        allowance = min(allowance, cut)
                     try:
                         wire.send(data[:allowance], "payload")
                     finally:
                         actual = wire.totals.get(wire.request_id + ":payload:tx", 0)
                         with self.lock:
                             self.remaining_quota -= actual
+                        if cut is not None:
+                            self.records.append({'kind': 'registered_half_payload',
+                                                 **self.interventions.finish_payload(wire.request_id, actual)})
+                    if cut is not None:
+                        # No error frame may be appended to a truncated payload.
+                        sock.shutdown(socket.SHUT_WR)
+                        return
                 finally:
                     self.queue.release()
             elif kind == "accounting":
@@ -285,9 +309,12 @@ class PeerService:
         except (OSError, ValueError, RuntimeError, KeyError) as exc:
             self.records.append({"time": time.time(), "request": wire.request_id, "status": "failed", "error": str(exc)})
             try:
-                wire.send_frame({"ok": False, "error": str(exc), "partial_cost": getattr(exc, "partial_cost", None),
-                                 "remote_job_id": getattr(exc, "remote_job_id", None),
-                                 "cost_complete": getattr(exc, "cost_complete", True)}, "result")
+                if payload_started:
+                    sock.shutdown(socket.SHUT_WR)
+                else:
+                    wire.send_frame({"ok": False, "error": str(exc), "partial_cost": getattr(exc, "partial_cost", None),
+                                     "remote_job_id": getattr(exc, "remote_job_id", None),
+                                     "cost_complete": getattr(exc, "cost_complete", True)}, "result")
             except (OSError, RuntimeError):
                 pass
         finally:
@@ -310,9 +337,11 @@ class PeerServer(socketserver.ThreadingTCPServer):
 
 
 class LiveExchange(ContactExchange):
-    def __init__(self, receiver, cache, ledger, peers, token_env, contact_gate=None, timeout=30):
+    def __init__(self, receiver, cache, ledger, peers, token_env, contact_gate=None, timeout=30,
+                 interventions=None, stage=None):
         super().__init__(receiver, cache, ledger)
         self.peers, self.token_env, self.contact_gate, self.timeout = peers, token_env, contact_gate, timeout
+        self.interventions, self.stage = interventions, stage
 
     def _client(self, owner):
         peer = self.peers[owner]
@@ -320,12 +349,19 @@ class LiveExchange(ContactExchange):
 
     def refresh(self):
         now = time.time()
+        if self.interventions is not None and self.interventions.mode == 'empty':
+            self.catalogue.clear()
+            self.connected.clear()
+            return
         for owner in sorted(self.peers):
             if self.contact_gate is not None and not self.contact_gate(owner, now):
                 self.connected.discard(owner)
                 continue
             try:
-                info, _ = self._client(owner).call("catalogue", {"limit": self.catalogue_limit})
+                request = {'limit': self.catalogue_limit}
+                if self.interventions is not None and self.interventions.mode == 'allowlist':
+                    request['allowlist'] = sorted(self.interventions.allowed)
+                info, _ = self._client(owner).call("catalogue", request)
                 if info["owner"] != owner:
                     raise ValueError("Peer owner mismatch")
                 self.connected.add(owner)
@@ -334,13 +370,16 @@ class LiveExchange(ContactExchange):
                     interface["labels"] = tuple(interface["labels"])
                     row["interface"] = PortSpec(**interface)
                     row["observed"] = now
-                    if row["owner"] == owner and row["available"] <= now and row["interface"] in self.cache.interfaces:
+                    if (row["owner"] == owner and row["available"] <= now and row["interface"] in self.cache.interfaces and
+                            (self.interventions is None or self.interventions.allows(row['hash']))):
                         self.catalogue[row["hash"]] = Advertisement(**row)
             except (OSError, RuntimeError, ValueError, KeyError) as exc:
                 self.connected.discard(owner)
                 self.records.append({"time": now, "owner": owner, "kind": "contact_failure", "error": str(exc)})
 
     def acquire(self, key, now):
+        if self.interventions is not None and not self.interventions.allows(key):
+            raise ExecutionStopped('External package excluded by donor policy')
         if key in self.cache:
             return self.cache.get(key)
         ad = self.catalogue.get(key)
@@ -348,7 +387,7 @@ class LiveExchange(ContactExchange):
             raise ExecutionStopped("No observed live advertisement for the exact requested version")
         if ad.size > self.cache.capacity:
             raise ExecutionStopped("Incoming package cannot fit transient storage")
-        result, payload = self._client(ad.owner).call("get", {"hash": key, "offset": 0}, maximum_payload=self.cache.capacity)
+        result, payload = self._client(ad.owner).call("get", {"hash": key, "offset": 0, 'stage': self.stage}, maximum_payload=self.cache.capacity)
         if result["hash"] != key or payload is None:
             raise ValueError("Wrong immutable package response")
         self.cache.put(key, payload, time.time())

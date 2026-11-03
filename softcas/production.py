@@ -14,7 +14,7 @@ def load(path):
 def main():
     parser = argparse.ArgumentParser(prog="python -m softcas.production")
     parser.add_argument("command", choices=("doctor", "prepare-data", "partition", "relocate-registry", "prepare-base",
-                                            "plan", "study-plan", "study-bindings", "study-compile", "study-run", "study-report", "conditions", "rgb-readout", "external-check", "external-run", "decision-audit", "mechanism", "run", "run-plan", "join-nodes", "serve-agent", "calibrate", "register-trt-cost", "diagnostic", "report", "predict", "target-status"))
+                                            "plan", "study-plan", "study-bindings", "study-bind", "development-lock", "external-source", "external-bind", "study-compile", "study-run", "study-report", "conditions", "rgb-readout", "external-check", "external-run", "decision-audit", "mechanism", "run", "run-plan", "join-nodes", "serve-agent", "calibrate", "register-trt-cost", "diagnostic", "report", "predict", "target-status"))
     parser.add_argument("--spec", required=True, help="Explicit JSON input; no inference/training starts without a command")
     parser.add_argument("--output")
     parser.add_argument("--resume", action="store_true")
@@ -49,10 +49,28 @@ def main():
         result = build_plan(spec)
     elif args.command == "study-plan":
         from .study import build_study
-        result = build_study(spec)
+        if spec.get('development_lock'):
+            from .bindings import native_study
+            result=native_study(spec)
+        else:
+            result = build_study(spec)
     elif args.command == "study-bindings":
         from .study_execution import binding_template
         result = binding_template(load(spec["study_registry"]), spec.get("selection"))
+    elif args.command == 'study-bind':
+        from .bindings import bind_study, write_binding_outputs
+        result = bind_study(load(spec['study_registry']),spec)
+        if spec.get('binding_output_directory'):
+            result=write_binding_outputs(result,spec['binding_output_directory'])
+    elif args.command == 'development-lock':
+        from .bindings import lock_development
+        result = lock_development(spec)
+    elif args.command == 'external-bind':
+        from .bindings import bind_external
+        result = bind_external(spec)
+    elif args.command == 'external-source':
+        from .bindings import external_source_snapshot
+        result = external_source_snapshot(spec)
     elif args.command == "study-compile":
         from .study_execution import compile_study
         result = compile_study(load(spec["study_registry"]), load(spec["bindings"]))
@@ -67,9 +85,13 @@ def main():
         result = evaluate_rgb({**spec, "output": args.output or spec["output"]})
     elif args.command == "external-check":
         from .external import validate_adapter
+        if isinstance(spec['adapter'],str):
+            value=load(spec['adapter']);spec['adapter']=value.get('adapter',value)
         result = validate_adapter(spec["adapter"], spec)
     elif args.command == "external-run":
         from .external import execute_external
+        if isinstance(spec['adapter'],str):
+            value=load(spec['adapter']);spec['adapter']=value.get('adapter',value)
         result = execute_external(spec, resume=args.resume)
     elif args.command == "study-report":
         from .study import summarize_completed, primary_contrasts

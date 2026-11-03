@@ -1,0 +1,12 @@
+{
+  "study_registry": "study_registry.json",
+  "selection": {
+    "blocks": [
+      "N01"
+    ],
+    "methods": [
+      "softcas",
+      "serial"
+    ]
+  }
+}

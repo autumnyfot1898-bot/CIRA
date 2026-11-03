@@ -1,31 +1,31 @@
-# Paper-to-code alignment — 2026-11-03
+# Paper-to-code alignment — execution update 2026-11-03
 
-Reference: the current CIRA manuscript and supplement, identified by `manifests/PAPER_SOURCE_SHA256.json`. Manuscript content and results were not changed for this source publication.
+The current CIRA manuscript and supplement are identified by `manifests/PAPER_SOURCE_SHA256.json`. This update changes execution software and documentation, not manuscript formulas, figures or reported results.
 
-## Checked core correspondences
+## Implemented and checked
 
-| Manuscript definition | Implementation |
+| Manuscript mechanism or execution requirement | Source |
 | --- | --- |
-| Complete state `(z,h,C,phi,beta,nu)` | `softcas/state.py`; optimizer moments are not inherited across fitting blocks |
-| Frozen external adapters; null branch and softmax receiving coefficients | `softcas/model.py` |
-| Fresh/Refine/membership revision/Import | `softcas/actions.py`, `softcas/proposals.py`, `softcas/engine.py` |
-| Signed child-minus-parent validation feedback; failed target zero | `softcas/engine.py` |
-| Ridge sufficient statistics, linear solve, feature coverage, parent-to-champion gap, resource-normalized priority | `softcas/controller.py` |
-| Incumbent/champion protection and bounded archive | `softcas/controller.py` |
-| R1000 epoch limits, 64 attempts, 65 V evaluations, 3 proposals/type, 8 archive states | `configs/native_r1000.json` |
-| Roles, paired summaries, failures and missing records | `softcas/data.py`, `evaluation.py`, `reporting.py`, `study.py` |
+| Complete state, local/soft receiving paths, parent-relative gain, archive, ridge and budget scheduling | `state.py`, `model.py`, `actions.py`, `controller.py`, `proposals.py`, `engine.py` |
+| Empty/weak donor policy in advertisements, cache access and inheritance | `interventions.py`, `cache.py`, `transport.py`, `experiment.py` |
+| One registered stage-two payload interruption, persistent trigger, partial-byte accounting, full restart | `interventions.py`, `transport.py` |
+| Actual subprocess external runner, source and qualification identity, strict result-matrix validation, failure/timeout/resume | `external.py`, `study_execution.py`, `production.py` |
+| Native DEV selection using all declared seeds/candidates; Local computation/communication ties; global Q computation ties; matched Serial receiving rate | `bindings.py` |
+| Paper-prespecified N-L01--N-L08 parameters and six-cell native inventory | `bindings.py`, `configs/development_selection.example.json`, `configs/native_binding_inventory.example.json` |
+| Exact base/registry/cost/feature/condition/DEV bindings and compiled-job identity | `bindings.py`, `study_execution.py` |
+| Formal scene/class/stage support and calibrated-base/runtime checks before readiness | `study_execution.py` |
+| Physical internal nodes and a single explicit external federation coordinator | `study_execution.py`, `experiment.py` |
 
-These are checked source correspondences, rather than a proof of complete end-to-end equivalence.
+The current source passed 199 CPU software tests. New tests include actual loopback TCP transfers and child-process execution, rather than only mocked dispatch. They do not establish native detector quality or hardware performance.
 
-## Known implementation and binding gaps
+## External algorithms and remaining prerequisites
 
-1. `production.py` and `study_execution.py` import `softcas.external`, which does not exist in this snapshot. The external-baseline commands and dispatch path cannot execute; the eight external native detector adapters and their qualification have not been implemented.
-2. `conditions.py` generates donor policies and a registered single half-payload intervention. `study_execution.py` copies them to the job's `interventions` field, but `execute_trajectory` does not consume that field. Empty/weak-donor policies and the registered interruption are therefore not fully applied by the native execution path. Half visibility is different: it is materialized in the contact trace.
-3. Native data/checkpoint identities, development-selected settings, feature scales, compute/time allowances, device profiles, addresses and causal start schedules remain external unbound inputs. The templates intentionally prevent formal execution without them.
-4. The paper's numerical policy study and independent reduced feature-module experiment use different execution objects. Their complete result-generation packages and data are not part of this initial repository snapshot. Current `softcas_impl` should not be described as the executor that generated every reported table.
+`external.py` is a complete execution/validation bridge. It is not the implementation of DPFL, pFedDIL, DA-DPFL, DeModCL, DCFCL, dFLMoE, PerFedSDE-NAS or DSpodFL. Their native detector ports and qualification evidence remain separate work. The eight method identities, primary-paper references, and four verified author-code repositories/commits are recorded in `configs/external_baselines.json`. Missing/unverified source URLs remain null. A generic fixture or CIRA alias is rejected as a replacement.
 
-## Verification
+Native base checkpoints, verified scene/role registries, native DEV outcomes, Orin feature/cost calibration, actual endpoints and causal schedules still need real artifacts. No eligible native checkpoints were found in the searched workspace and desktop CIRA roots. Cost assumptions and numeric-trace registries were found separately; they are not bound as measured native profiles. The binding commands report missing files and keep unbound jobs blocked.
 
-The publication staging copy passed the full CPU software regression. Exact test count/result and source identities are in `manifests/SNAPSHOT_VALIDATION.json` and `manifests/SOURCE_SHA256.json`. The source, tests and configuration files were copied byte for byte from the local CIRA implementation; repository-facing documentation was prepared separately.
+The manuscript's numerical policy and independent reduced feature-module studies are not claimed to have been generated by this native executor. Their complete result-generation packages and data are outside this source snapshot.
 
-The check did not perform native YOLO training, launch the four Jetson services, or measure devices. No experimental scores were added or inferred from software tests.
+## Reproduction boundary
+
+Read `docs/EXECUTION_BINDING.md` for the runnable commands and input/output schemas. `manifests/SOURCE_SHA256.json` identifies the published files; `manifests/SNAPSHOT_VALIDATION.json` records verification and explicitly lists prerequisites. No training, device measurements, fabricated calibration or paper-result replacement was performed in this update.

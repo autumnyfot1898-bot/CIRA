@@ -8,7 +8,7 @@ from .resources import Cost, ExecutionStopped, TransferJournal
 
 
 class PackageCache:
-    def __init__(self, capacity_bytes, interfaces, store=None):
+    def __init__(self, capacity_bytes, interfaces, store=None, allowed_package=None):
         self.capacity = capacity_bytes
         self.interfaces = tuple(interfaces)
         self._wire = {}
@@ -17,18 +17,21 @@ class PackageCache:
         self.clock = 0
         self.transitions = []
         self.store = store
+        self.allowed_package = allowed_package or (lambda key: True)
 
     def __contains__(self, key):
-        return key in self._wire or (self.store is not None and self.store._path(key).is_file())
+        return self.allowed_package(key) and (key in self._wire or (self.store is not None and self.store._path(key).is_file()))
 
     @property
     def bytes(self):
         return sum(map(len, self._wire.values()))
 
     def keys(self):
-        return tuple(sorted(set(self._wire) | (set(self.store.keys()) if self.store else set())))
+        return tuple(k for k in sorted(set(self._wire) | (set(self.store.keys()) if self.store else set())) if self.allowed_package(k))
 
     def get(self, key):
+        if not self.allowed_package(key):
+            raise ExecutionStopped('External package excluded by donor policy')
         if key not in self._wire and self.store:
             self.put(key, self.store.get(key))
         self.clock += 1
@@ -38,6 +41,9 @@ class PackageCache:
         return Package.read(self._wire[key])
 
     def pin(self, token, keys):
+        keys = tuple(keys)
+        if any(not self.allowed_package(k) for k in keys):
+            raise ValueError('Pinned state violates donor policy')
         self.pins[token] = frozenset(keys)
         if self.store:
             self.store.pin(token, self.pins[token])
@@ -48,6 +54,8 @@ class PackageCache:
             self.store.unpin(token)
 
     def put(self, key, wire, now=None):
+        if not self.allowed_package(key):
+            raise ExecutionStopped('External package excluded by donor policy')
         now = time.time() if now is None else now
         if hashlib.sha256(wire).hexdigest() != key:
             raise ValueError("Wire-byte checksum mismatch")

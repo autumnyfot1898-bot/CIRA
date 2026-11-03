@@ -113,7 +113,54 @@ def _development(study, spec, inputs):
         raise ValueError("Study and actual development selection differ or are unlocked")
     if set(lock.get("seeds", [])) != {9001, 9002, 9003}:
         raise ValueError("Development lock requires the declared independent DEV seeds")
+    if spec.get('formal',True) and not lock.get('inputs'):
+        raise ValueError('Formal DEV selection requires actual bound development records')
+    if spec.get('formal',True) and lock.get('evidence_scope')!='native_paper_r1000':
+        raise ValueError('Software fixture DEV locks cannot enable native formal execution')
+    for binding in lock.get('inputs',[]):
+        _asset(binding,inputs)
+    if 'candidate_grids' in lock:
+        evidence=digest({'inputs':lock['inputs'],'cells':lock['candidate_grids'],
+                         'selection_metric':'final_macro_seen','seeds':(9001,9002,9003),
+                         'evidence_scope':lock.get('evidence_scope')})
+        if evidence!=lock['selection']['sha256']:
+            raise ValueError('DEV selection evidence identity changed')
     return lock
+
+
+def validate_native_metadata(job, config):
+    """Check native assets before a compiled job is called ready; no GPU load."""
+    from .data import validate_registry
+    from .metering import CostProfile
+    registry,detector=read(job['registry']),read(job['detector_config'])
+    labels=tuple(registry.get('labels',()))
+    if len(labels)!=8 or tuple(detector.get('labels',()))!=labels:
+        raise ValueError('Bind matching fixed eight-class registry and detector metadata')
+    if len(detector.get('ports',()))!=6 or detector.get('image_size')!=640:
+        raise ValueError('Native paper protocol needs six verified ports and 640 input')
+    if not registry.get('records'):
+        raise ValueError('Native scene registry is empty')
+    validate_registry(registry['records'],formal=True)
+    for client in map(str,job['clients']):
+        for stage in range(1,5):
+            for role in ('D','V','A'):
+                if not any(str(r['client'])==client and r['stage']==stage and r['role']==role for r in registry['records']):
+                    raise ValueError(f'Native scene support missing for client {client}, stage {stage}, {role}')
+    if not any(r['role']=='T' for r in registry['records']):
+        raise ValueError('Native scene registry lacks independent T reporting pools')
+    profile=read(config['cost_profile'])
+    runtime=profile.get('runtime')
+    if not isinstance(runtime,dict):
+        raise ValueError('Cost profile needs its actual runtime identity')
+    CostProfile(config['cost_profile'],runtime,strict=True)
+    if profile.get('base_sha256')!=file_binding(job['checkpoint'])['sha256']:
+        raise ValueError('Native cost profile belongs to a different frozen base')
+    for field in ('family','precision','device'):
+        if runtime.get(field)!=config['runtime'].get(field):
+            raise ValueError('Native runtime differs from the calibrated '+field)
+    if not profile.get('models') and not profile.get('component_model'):
+        raise ValueError('Native cost profile has no calibrated model or component coverage')
+    return True
 
 
 def _compile_one(study, row, spec, lock, common_inputs):
@@ -122,6 +169,8 @@ def _compile_one(study, row, spec, lock, common_inputs):
     f, inputs = recipe["factors"], dict(common_inputs)
     cell = recipe["dataset"] + "/" + recipe["detector"]
     bound = spec["cells"][cell]
+    for binding in spec.get('extra_inputs',[]) + bound.get('extra_inputs',[]):
+        _asset(binding,inputs)
     condition = spec["conditions"][condition_key(recipe)]
     if condition["condition"] != condition_identity(recipe):
         raise ValueError("Condition binding identity differs from recipe")
@@ -166,19 +215,27 @@ def _compile_one(study, row, spec, lock, common_inputs):
            "study_trajectory_id": row["id"], "study_recipe": copy.deepcopy(recipe),
            "condition_manifest": manifest_file, "interventions": materialized.get("interventions", {}),
            "input_manifest": inputs}
+    from .interventions import validate_interventions
+    validate_interventions(job['interventions'])
+    weak_lock = job['interventions'].get('donors', {}).get('development_lock')
+    if weak_lock:
+        _asset(weak_lock, inputs)
     if recipe["method"] not in INTERNAL:
         # External algorithms have their own executor and qualification; they
         # must not be passed through the CIRA method switch.
         from .external import validate_adapter
         adapter = spec["external_adapters"][recipe["method"]]
-        validate_adapter(adapter, job)
-        job.update(executor="external", adapter=copy.deepcopy(adapter))
+        validation = validate_adapter(adapter, job)
+        inputs.update(validation['input_manifest'])
+        job.update(executor="external", adapter=copy.deepcopy(adapter), expected_adapter_sha256=validation['adapter_sha256'])
     else:
         job["executor"] = "internal"
         effective, job["formal"] = trajectory_config(job)
         if effective.get("cost_profile"):
             profile = Path(effective["cost_profile"]).resolve()
             inputs[str(profile)] = file_binding(profile)["sha256"]
+        if job['formal']:
+            validate_native_metadata(job,effective)
         job["expected_configuration_sha256"] = digest(effective)
     return job
 
@@ -215,16 +272,35 @@ def compile_study(study, spec):
             "jobs": jobs, "unit": "complete federation trajectory", "executed": False}
     if "physical_nodes" in spec and jobs:
         from .experiment import _physical_plan, trajectory_config
-        if any(j["executor"] != "internal" for j in jobs):
-            raise ValueError("External executors must declare and manage their native physical topology separately")
-        plan["jobs"], plan["trajectory_groups"] = _physical_plan(jobs, spec)
+        expanded, groups = _physical_plan(jobs, spec)
+        external_jobs = [j for j in jobs if j['executor']=='external']
+        plan['jobs'] = [j for j in expanded if j['executor']=='internal']
+        internal_names = {j['name'] for j in jobs if j['executor']=='internal'}
+        plan['trajectory_groups'] = [g for g in groups if g['trajectory'] in internal_names]
         for job in plan["jobs"]:
             _config_inputs(job["config"], job["input_manifest"])
             config, job["formal"] = trajectory_config(job)
+            if job['formal']:
+                validate_native_metadata(job,config)
+                inputs=job['input_manifest']
+                inputs[str(Path(config['cost_profile']).resolve())]=file_binding(config['cost_profile'])['sha256']
             job["expected_configuration_sha256"] = digest(config)
+        if external_jobs:
+            coordinator = str(spec.get('external_coordinator_id',''))
+            if coordinator not in set(map(str,clients)):
+                raise ValueError('External physical executors need an explicit external_coordinator_id')
+            epochs = {g['trajectory']:g['epoch_start_unix'] for g in groups}
+            for job in external_jobs:
+                job.update(node_id=coordinator,physical_nodes=copy.deepcopy(spec['physical_nodes']),
+                           federation_clients=list(map(str,clients)),epoch_start_unix=epochs[job['name']],
+                           external_topology='runner_managed_complete_federation')
+                plan['jobs'].append(job)
+            plan['external_trajectory_outputs']=[str(Path(j['output'])/'trajectory.json') for j in external_jobs]
         plan.update(execution_topology="physical_nodes", node_ids=list(map(str, clients)))
     if spec.get("require_all_ready", False) and blocked:
         raise ValueError(f"{len(blocked)} selected trajectories have unresolved bindings; inspect a non-strict compile report")
+    for job in plan['jobs']:
+        job['compiled_job_sha256'] = digest(job)
     return plan
 
 
@@ -232,6 +308,8 @@ def preflight_job(job):
     """Pin input and configuration identities again immediately before execution."""
     if digest(job["study_recipe"]) != job["study_trajectory_id"]:
         raise ValueError("Corrupted study recipe")
+    if 'compiled_job_sha256' in job and digest({k:v for k,v in job.items() if k!='compiled_job_sha256'}) != job['compiled_job_sha256']:
+        raise ValueError('Compiled job fields changed before execution')
     for path, expected in job["input_manifest"].items():
         if file_binding(path)["sha256"] != expected:
             raise ValueError("Compiled input changed before execution: " + path)
@@ -240,6 +318,10 @@ def preflight_job(job):
         configuration, _ = trajectory_config(job)
         if digest(configuration) != job["expected_configuration_sha256"]:
             raise ValueError("Effective configuration differs from the compiled job")
+    elif job.get('executor') == 'external':
+        from .external import validate_adapter
+        if validate_adapter(job['adapter'],job)['adapter_sha256'] != job['expected_adapter_sha256']:
+            raise ValueError('External implementation differs from the compiled job')
     return True
 
 

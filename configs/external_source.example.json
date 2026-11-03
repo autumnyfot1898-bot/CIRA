@@ -1,0 +1,4 @@
+{
+  "source_root": "BIND_ACTUAL_UPSTREAM_OR_PORT_CHECKOUT",
+  "repository_url": "BIND_VERIFIED_HTTPS_REPOSITORY_URL"
+}

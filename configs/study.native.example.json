@@ -1,0 +1,20 @@
+{
+  "_status": "BIND_NATIVE_DEV_RESULTS_REQUIRED: unlike the unlocked study example, native selection is loaded from the actual DEV lock.",
+  "datasets": [
+    "ControlledFog",
+    "ACDC"
+  ],
+  "detectors": [
+    "YOLOv8n",
+    "YOLO11n",
+    "YOLO26n"
+  ],
+  "seeds": [
+    1001,
+    1002,
+    1003,
+    1004,
+    1005
+  ],
+  "development_lock": "native_development_lock.json"
+}

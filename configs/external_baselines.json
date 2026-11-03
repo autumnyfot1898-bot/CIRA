@@ -1,0 +1,80 @@
+{
+  "schema": "cira.external_catalogue.v1",
+  "checked_date": "2026-11-03",
+  "execution_framework": "softcas.external",
+  "qualified_native_detector_adapters": [],
+  "methods": {
+    "DPFL": {
+      "paper_url": "https://proceedings.mlr.press/v258/kharrat25a.html",
+      "mechanisms_to_preserve": "collaboration graph construction, greedy selection, and local model update",
+      "upstream_repository": "https://github.com/salmakh1/DPFL",
+      "upstream_commit_checked": "000a96827744010cb440b8f990c48841a25d0014",
+      "upstream_license_declared": null,
+      "detector_port_status": "not_qualified",
+      "source_note": "Author source repository verified; detector adaptation still requires implementation and qualification."
+    },
+    "pFedDIL": {
+      "paper_url": "https://doi.org/10.1007/978-3-031-72952-2_8",
+      "mechanisms_to_preserve": "adaptive historical model matching and auxiliary classifiers",
+      "upstream_repository": null,
+      "upstream_commit_checked": null,
+      "upstream_license_declared": null,
+      "detector_port_status": "not_qualified",
+      "source_note": "Paper identified; an author detector-adaptation source was not verified in this review."
+    },
+    "DA-DPFL": {
+      "paper_url": "https://doi.org/10.1109/TNNLS.2025.3580277",
+      "mechanisms_to_preserve": "dynamic aggregation schedule and conditional sparse-to-sparser pruning",
+      "upstream_repository": "https://github.com/EricLoong/da-dpfl",
+      "upstream_commit_checked": "a7f93b8b9eb1adc75aa43328f39a9a83e3a854f5",
+      "upstream_license_declared": "MIT",
+      "detector_port_status": "not_qualified",
+      "source_note": "Author source repository verified; detector adaptation still requires implementation and qualification."
+    },
+    "DeModCL": {
+      "paper_url": "https://ieeexplore.ieee.org/abstract/document/11664356/",
+      "mechanisms_to_preserve": "aligned modularization, memory-trace routing, and selective collaboration",
+      "upstream_repository": null,
+      "upstream_commit_checked": null,
+      "upstream_license_declared": null,
+      "detector_port_status": "not_qualified",
+      "source_note": "Paper identified; an author detector-adaptation source was not verified in this review."
+    },
+    "DCFCL": {
+      "paper_url": "https://arxiv.org/abs/2509.23683",
+      "mechanisms_to_preserve": "coalitional affinity, merge-blocking, and dynamic cooperation",
+      "upstream_repository": "https://github.com/ydn3229/DCFCL",
+      "upstream_commit_checked": "23e94ea285f403edd68e493796959fdc16058a95",
+      "upstream_license_declared": "MIT",
+      "detector_port_status": "not_qualified",
+      "source_note": "Author source repository verified; detector adaptation still requires implementation and qualification."
+    },
+    "dFLMoE": {
+      "paper_url": "https://openaccess.thecvf.com/content/CVPR2025/html/Xie_dFLMoE_Decentralized_Federated_Learning_via_Mixture_of_Experts_for_Medical_CVPR_2025_paper.html",
+      "mechanisms_to_preserve": "decentralized expert exchange and mixture routing with detector output adaptation",
+      "upstream_repository": null,
+      "upstream_commit_checked": null,
+      "upstream_license_declared": null,
+      "detector_port_status": "not_qualified",
+      "source_note": "Paper identified; an author detector-adaptation source was not verified in this review."
+    },
+    "PerFedSDE-NAS": {
+      "paper_url": "https://openaccess.thecvf.com/content/ICCV2025/papers/Liao_Neural_Architecture_Search_Driven_by_Locally_Guided_Diffusion_for_Personalized_ICCV_2025_paper.pdf",
+      "mechanisms_to_preserve": "locally guided diffusion, predictor, supernet preparation, and archive",
+      "upstream_repository": null,
+      "upstream_commit_checked": null,
+      "upstream_license_declared": null,
+      "detector_port_status": "not_qualified",
+      "source_note": "Paper identified; an author detector-adaptation source was not verified in this review."
+    },
+    "DSpodFL": {
+      "paper_url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/9521b6e7f33e039e7d92e23f5e37bbf4-Abstract-Conference.html",
+      "mechanisms_to_preserve": "sporadic local gradient steps and neighbor-model mixing",
+      "upstream_repository": "https://github.com/ShahryarBQ/DSpodFL",
+      "upstream_commit_checked": "1f1511b597ac878f9d7d98367b0aaae2a5a0be24",
+      "upstream_license_declared": null,
+      "detector_port_status": "not_qualified",
+      "source_note": "Author source repository verified; detector adaptation still requires implementation and qualification."
+    }
+  }
+}

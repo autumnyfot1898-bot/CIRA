@@ -1,0 +1,29 @@
+{
+  "_status": "BIND_REQUIRED: executable bridge only; no external algorithm or detector qualification is fabricated.",
+  "method": "DPFL",
+  "formal": true,
+  "source_root": "BIND_ACTUAL_UPSTREAM_OR_PORT_CHECKOUT",
+  "repository_url": "https://github.com/salmakh1/DPFL",
+  "qualification": "BIND_DETECTOR_QUALIFICATION_REPORT.json",
+  "runner": {
+    "argv": [
+      "BIND_ABSOLUTE_PYTHON_EXECUTABLE",
+      "BIND_ABSOLUTE_DETECTOR_RUNNER.py",
+      "--job",
+      "{job}",
+      "--result",
+      "{result}"
+    ],
+    "cwd": "BIND_ACTUAL_UPSTREAM_OR_PORT_CHECKOUT",
+    "files": [
+      "BIND_ABSOLUTE_DETECTOR_RUNNER.py"
+    ],
+    "timeout_seconds": 7200,
+    "environment": {}
+  },
+  "check_job": {
+    "dataset": "ControlledFog",
+    "detector": "YOLOv8n",
+    "interventions": {}
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "_status": "ACTUAL_ARTIFACT_PATHS_REQUIRED: no training or measurement has been performed by this file.",
+  "study_registry": "study_registry.json",
+  "development_lock": "native_development_lock.json",
+  "formal": true,
+  "selection": {
+    "blocks": [
+      "N01"
+    ],
+    "methods": [
+      "softcas",
+      "serial"
+    ]
+  },
+  "clients": [
+    "0",
+    "1",
+    "2",
+    "3"
+  ],
+  "output_root": "runs/native_study",
+  "binding_output_directory": "runs/new_bound_plan",
+  "cells": {
+    "ControlledFog/YOLOv8n": {
+      "config": "configs/native_r1000.json",
+      "checkpoint": "assets/ControlledFog/YOLOv8n/base_8class.pt",
+      "detector_config": "configs/detector_YOLOv8n.example.json",
+      "cost_profile": "assets/ControlledFog/YOLOv8n/validated_cost_profile.json",
+      "feature_profile": "assets/ControlledFog/YOLOv8n/native_DEV_feature_scales.json",
+      "overrides": {},
+      "extra_inputs": [],
+      "budgets_by_round": {
+        "300": "assets/ControlledFog/YOLOv8n/budget_R300.json",
+        "500": "assets/ControlledFog/YOLOv8n/budget_R500.json",
+        "1000": "assets/ControlledFog/YOLOv8n/budget_R1000.json"
+      }
+    },
+    "ControlledFog/YOLO11n": {
+      "config": "configs/native_r1000.json",
+      "checkpoint": "assets/ControlledFog/YOLO11n/base_8class.pt",
+      "detector_config": "configs/detector_YOLO11n.example.json",
+      "cost_profile": "assets/ControlledFog/YOLO11n/validated_cost_profile.json",
+      "feature_profile": "assets/ControlledFog/YOLO11n/native_DEV_feature_scales.json",
+      "overrides": {},
+      "extra_inputs": [],
+      "budgets_by_round": {
+        "300": "assets/ControlledFog/YOLO11n/budget_R300.json",
+        "500": "assets/ControlledFog/YOLO11n/budget_R500.json",
+        "1000": "assets/ControlledFog/YOLO11n/budget_R1000.json"
+      }
+    },
+    "ControlledFog/YOLO26n": {
+      "config": "configs/native_r1000.json",
+      "checkpoint": "assets/ControlledFog/YOLO26n/base_8class.pt",
+      "detector_config": "configs/detector_YOLO26n.example.json",
+      "cost_profile": "assets/ControlledFog/YOLO26n/validated_cost_profile.json",
+      "feature_profile": "assets/ControlledFog/YOLO26n/native_DEV_feature_scales.json",
+      "overrides": {},
+      "extra_inputs": [],
+      "budgets_by_round": {
+        "300": "assets/ControlledFog/YOLO26n/budget_R300.json",
+        "500": "assets/ControlledFog/YOLO26n/budget_R500.json",
+        "1000": "assets/ControlledFog/YOLO26n/budget_R1000.json"
+      }
+    },
+    "ACDC/YOLOv8n": {
+      "config": "configs/native_r1000.json",
+      "checkpoint": "assets/ACDC/YOLOv8n/base_8class.pt",
+      "detector_config": "configs/detector_YOLOv8n.example.json",
+      "cost_profile": "assets/ACDC/YOLOv8n/validated_cost_profile.json",
+      "feature_profile": "assets/ACDC/YOLOv8n/native_DEV_feature_scales.json",
+      "overrides": {},
+      "extra_inputs": [],
+      "budgets_by_round": {
+        "300": "assets/ACDC/YOLOv8n/budget_R300.json",
+        "500": "assets/ACDC/YOLOv8n/budget_R500.json",
+        "1000": "assets/ACDC/YOLOv8n/budget_R1000.json"
+      }
+    },
+    "ACDC/YOLO11n": {
+      "config": "configs/native_r1000.json",
+      "checkpoint": "assets/ACDC/YOLO11n/base_8class.pt",
+      "detector_config": "configs/detector_YOLO11n.example.json",
+      "cost_profile": "assets/ACDC/YOLO11n/validated_cost_profile.json",
+      "feature_profile": "assets/ACDC/YOLO11n/native_DEV_feature_scales.json",
+      "overrides": {},
+      "extra_inputs": [],
+      "budgets_by_round": {
+        "300": "assets/ACDC/YOLO11n/budget_R300.json",
+        "500": "assets/ACDC/YOLO11n/budget_R500.json",
+        "1000": "assets/ACDC/YOLO11n/budget_R1000.json"
+      }
+    },
+    "ACDC/YOLO26n": {
+      "config": "configs/native_r1000.json",
+      "checkpoint": "assets/ACDC/YOLO26n/base_8class.pt",
+      "detector_config": "configs/detector_YOLO26n.example.json",
+      "cost_profile": "assets/ACDC/YOLO26n/validated_cost_profile.json",
+      "feature_profile": "assets/ACDC/YOLO26n/native_DEV_feature_scales.json",
+      "overrides": {},
+      "extra_inputs": [],
+      "budgets_by_round": {
+        "300": "assets/ACDC/YOLO26n/budget_R300.json",
+        "500": "assets/ACDC/YOLO26n/budget_R500.json",
+        "1000": "assets/ACDC/YOLO26n/budget_R1000.json"
+      }
+    }
+  },
+  "conditions": {},
+  "external_adapters": {},
+  "physical_nodes": {
+    "0": {
+      "endpoint": {
+        "host": "BIND_ORIN_0_ADDRESS",
+        "port": 18000
+      }
+    },
+    "1": {
+      "endpoint": {
+        "host": "BIND_ORIN_1_ADDRESS",
+        "port": 18001
+      }
+    },
+    "2": {
+      "endpoint": {
+        "host": "BIND_ORIN_2_ADDRESS",
+        "port": 18002
+      }
+    },
+    "3": {
+      "endpoint": {
+        "host": "BIND_ORIN_3_ADDRESS",
+        "port": 18003
+      }
+    }
+  },
+  "epoch_start_unix": null,
+  "trajectory_spacing_seconds": null,
+  "external_coordinator_id": "0",
+  "require_all_ready": false,
+  "note": "Populate condition keys from study-bindings. Formal config confirmations require real evidence; no flags are set automatically."
+}
